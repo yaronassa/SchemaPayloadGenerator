@@ -1,0 +1,3 @@
+{
+  "definitions": {"some": {"$ref": "some/thing"}}
+}
