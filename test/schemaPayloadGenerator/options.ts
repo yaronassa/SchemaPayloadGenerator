@@ -6,6 +6,7 @@ const sinon = require('sinon');
 const path = require('path');
 const testDataPath = path.resolve('test', 'testData');
 
+// tslint:disable:no-console
 
 describe('SchemaPayloadGenerator Options', () => {
     beforeEach(() => {

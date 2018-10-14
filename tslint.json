@@ -15,7 +15,7 @@
     "variable-name": [true, "allow-leading-underscore"],
     "semicolon": [true, "always", "ignore-interfaces"],
     "curly": [true, "ignore-same-line"],
-    "no-console": false,
+    "no-console": true,
     "arrow-parens": [true, "ban-single-arg-parens"],
     "no-trailing-whitespace": [true, "ignore-blank-lines"],
     "only-arrow-functions": [true, "allow-named-functions"],

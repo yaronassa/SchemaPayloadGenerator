@@ -62,6 +62,8 @@ class SchemaPayloadGenerator {
 
         if (masterDefinition.type === undefined) throw new Error(`Schema root doesn't have the mandatory "type" property`);
 
+        this.report(`Generating payloads${(definitionKey) ? ' for ' + definitionKey : ''}...`);
+
         return [];
     }
 
@@ -74,6 +76,7 @@ class SchemaPayloadGenerator {
     }
 
     private report(message: string) {
+        // tslint:disable-next-line:no-console
         if (this.options.silent === false) console.log(message);
     }
 }

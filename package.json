@@ -8,7 +8,8 @@
   "version": "0.0.1",
   "scripts": {
     "test": "mocha -r ts-node/register -r ./test/setup/setup.ts test/**/*.ts",
-    "coverage": "nyc mocha  -r ts-node/register -r source-map-support/register --full-trace --bail -r ./test/setup/setup.ts test/**/*.ts "
+    "coverage": "nyc mocha  -r ts-node/register -r source-map-support/register --full-trace --bail -r ./test/setup/setup.ts test/**/*.ts",
+    "lint": "./node_modules/.bin/tslint -p ./"
   },
   "nyc": {
     "include": [
