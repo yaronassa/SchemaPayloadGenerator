@@ -7,7 +7,25 @@
   },
   "version": "0.0.1",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.ts"
+    "test": "mocha -r ts-node/register -r ./test/setup/setup.ts test/**/*.ts",
+    "coverage": "nyc mocha  -r ts-node/register -r source-map-support/register --full-trace --bail -r ./test/setup/setup.ts test/**/*.ts "
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   },
   "dependencies": {
     "typescript": "^3.1.3",
@@ -28,6 +46,8 @@
     "sinon": "^7.0.0",
     "sinon-chai": "^3.2.0",
     "@types/sinon": "^5.0.5",
-    "@types/sinon-chai": "^3.2.0"
+    "@types/sinon-chai": "^3.2.0",
+    "nyc": "^13.1.0",
+    "source-map-support": "^0.5.9"
   }
 }
