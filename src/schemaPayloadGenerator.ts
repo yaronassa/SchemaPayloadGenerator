@@ -88,7 +88,9 @@ class SchemaPayloadGenerator {
 
         if (masterDefinition.type === undefined) throw new Error(`Schema root doesn't have the mandatory "type" property`);
 
-        this.report(`Generating payloads${(definitionKey) ? ' for ' + definitionKey : ''}...`);
+        const keyReportName = definitionKey || masterDefinition.$id || masterDefinition.title || 'main object';
+
+        this.report(`Generating payloads for ${keyReportName}`);
 
         const processingResult = await this.generateFieldPayloads({
             schema: masterDefinition,
@@ -96,6 +98,8 @@ class SchemaPayloadGenerator {
             fieldTransformedKey: this.options.payloadKeyTransform(definitionKey || ''),
             fieldFullPath: definitionKey || '/'
         });
+
+        this.report(`Generated ${processingResult.length} payloads`);
 
         return processingResult;
     }

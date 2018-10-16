@@ -31,10 +31,13 @@ class TypeFieldProcessor extends BaseFieldProcessor {
     }
 
     protected async processSchemaField_integer(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
-        const minimum = field.schema.minimum || 0;
-        const maximum = field.schema.maximum || 100;
+        let minimum = field.schema.minimum || 1;
+        let maximum = field.schema.maximum || 100;
 
-        const rawValues = [minimum, maximum, Math.floor(Math.random() * maximum + minimum)];
+        if (field.schema.exclusiveMaximum) maximum = maximum - 1;
+        if (field.schema.exclusiveMinimum) minimum = minimum + 1;
+
+        const rawValues = [minimum, maximum, Math.floor(Math.random() * (maximum - minimum + 1) + minimum)];
 
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
@@ -68,7 +71,9 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 return acc;
             }, []);
 
-            const allVariationsRawValues = [].concat(possibleSubFieldVariations.map(value => value.payload)).concat(pairwiseVariationRawValues);
+            const allVariationsRawValues = []
+                .concat(possibleSubFieldVariations.map(value => [value.payload]))
+                .concat(pairwiseVariationRawValues);
 
             arrayVariations = this.rawValuesToPossiblePayloads(allVariationsRawValues, field);
         }
