@@ -1,25 +1,49 @@
 import {JSONSchema6} from "json-schema";
+import {BaseFieldProcessor} from "./schemaFieldProcessors/baseFieldProcessor";
+import {TypeFieldProcessor} from "./schemaFieldProcessors/typeFieldProcessor";
 
 const assignDeep = require('assign-deep');
 const path = require('path');
 const refParser = require('json-schema-ref-parser');
+const bluebird = require('bluebird');
 
+type SchemaFieldProcessor = (field: IFieldProcessingData) => Promise<any>;
 
 interface ISchemaPayloadGeneratorOptions {
-    silent?: boolean
+    silent?: boolean,
+    payloadKeyTransform?: (key: string) => string
 }
 
-interface ISchemaPayload {
+interface IFieldProcessingData {
+    parent?: IFieldProcessingData,
+    schema: JSONSchema6,
+    fieldKeyInParent: string,
+    fieldTransformedKey: string,
+    fieldFullPath: string
+}
+
+interface IFieldPossiblePayload {
+    field: IFieldProcessingData,
     payload: any,
-    parent?: ISchemaPayload
+    parentPossiblePayload?: IFieldPossiblePayload,
+    id: string
 }
 
 class SchemaPayloadGenerator {
-    protected schema: JSONSchema6;
-    protected readonly options: ISchemaPayloadGeneratorOptions;
+    public readonly options: ISchemaPayloadGeneratorOptions;
+    public schema: JSONSchema6;
+    protected fieldProcessors: BaseFieldProcessor[];
 
     constructor(options?: ISchemaPayloadGeneratorOptions) {
         this.options = this.parseOptions(options);
+        this.initFieldProcessors();
+    }
+
+    public report(message: string, endWithNewLine: boolean = true) {
+        if (this.options.silent === false) {
+            process.stdout.write(message);
+            if (endWithNewLine) process.stdout.write('\n');
+        }
     }
 
     public async loadSchema(schema: JSONSchema6 | string, parserOptions?: any) {
@@ -31,7 +55,6 @@ class SchemaPayloadGenerator {
             } catch (e) {
                 throw new Error(`Failed to read schema from location = ${schema}`);
             }
-
         }
 
         try {
@@ -47,7 +70,7 @@ class SchemaPayloadGenerator {
         this.report(`Loaded schema with ${definitionCount} definitions${(hasDirectObject) ? ', and a direct object' : ''}`);
     }
 
-    public async generatePayloads(definitionKey?: string): Promise<ISchemaPayload[]> {
+    public async generatePayloads(definitionKey?: string): Promise<IFieldPossiblePayload[]> {
         if (this.schema === undefined) throw new Error(`Must load a schema before generating payloads`);
 
         let masterDefinition: JSONSchema6;
@@ -64,22 +87,46 @@ class SchemaPayloadGenerator {
 
         this.report(`Generating payloads${(definitionKey) ? ' for ' + definitionKey : ''}...`);
 
-        return [];
+        const processingResult = await this.generateFieldPayloads({
+            schema: masterDefinition,
+            fieldKeyInParent: definitionKey || '',
+            fieldTransformedKey: this.options.payloadKeyTransform(definitionKey || ''),
+            fieldFullPath: definitionKey || '/'
+        });
+
+        return processingResult;
+    }
+
+    protected async generateFieldPayloads(processingData: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        let processingResult;
+
+        for (const processor of this.fieldProcessors) {
+            processingResult = await processor.generateFieldPayloads(processingData);
+            if (processingResult !== undefined) break;
+        }
+
+        return processingResult;
+    }
+
+    protected initFieldProcessors() {
+        const processFieldByType = new TypeFieldProcessor(this);
+        this.fieldProcessors = [processFieldByType];
     }
 
     private parseOptions(userOptions: ISchemaPayloadGeneratorOptions = {}): ISchemaPayloadGeneratorOptions {
         const defaults: ISchemaPayloadGeneratorOptions = {
-            silent: true
+            silent: true,
+            payloadKeyTransform: this.toCamelCase
         };
 
         return assignDeep({}, defaults, userOptions);
     }
 
-    private report(message: string) {
-        // tslint:disable-next-line:no-console
-        if (this.options.silent === false) console.log(message);
+    private toCamelCase(name: string): string {
+        return name.replace(/_([a-z])/g, match => match[1].toUpperCase());
     }
+
 }
 
 
-export {SchemaPayloadGenerator, ISchemaPayloadGeneratorOptions, ISchemaPayload};
+export {SchemaPayloadGenerator, ISchemaPayloadGeneratorOptions, SchemaFieldProcessor, IFieldProcessingData, IFieldPossiblePayload};
