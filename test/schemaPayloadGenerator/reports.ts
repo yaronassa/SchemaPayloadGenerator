@@ -10,12 +10,12 @@ const testDataPath = path.resolve('test', 'testData');
 
 describe('SchemaPayloadGenerator Reports to STDOUT', () => {
     beforeEach(() => {
-        sinon.spy(console, 'log');
+        sinon.spy(process.stdout, 'write');
     });
 
     afterEach(() => {
         // @ts-ignore
-        console.log.restore();
+        process.stdout.write.restore();
     });
 
     describe('Schema loading', () => {
@@ -24,21 +24,21 @@ describe('SchemaPayloadGenerator Reports to STDOUT', () => {
             const generator = new SchemaPayloadGenerator({silent: false});
             // @ts-ignore
             await generator.loadSchema({definitions: {some: {}, else: {}}, junk: {}});
-            expect(console.log).to.have.been.calledWith('Loaded schema with 2 definitions');
+            expect(process.stdout.write).to.have.been.calledWith('Loaded schema with 2 definitions\n');
         });
 
         it('Reports the correct loaded definition count (= 0)', async () => {
             const generator = new SchemaPayloadGenerator({silent: false});
             // @ts-ignore
             await generator.loadSchema({junk: {}, type: "string"});
-            expect(console.log).to.have.been.calledWithMatch(/Loaded schema with 0 definitions/);
+            expect(process.stdout.write).to.have.been.calledWithMatch(/Loaded schema with 0 definitions/);
         });
 
         it('Reports direct objects', async () => {
             const generator = new SchemaPayloadGenerator({silent: false});
             // @ts-ignore
             await generator.loadSchema({junk: {}, type: "string"});
-            expect(console.log).to.have.been.calledWithMatch(/, and a direct object/);
+            expect(process.stdout.write).to.have.been.calledWithMatch(/, and a direct object/);
         });
 
     });

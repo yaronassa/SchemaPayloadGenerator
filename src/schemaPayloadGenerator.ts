@@ -41,8 +41,11 @@ class SchemaPayloadGenerator {
 
     public report(message: string, endWithNewLine: boolean = true) {
         if (this.options.silent === false) {
-            process.stdout.write(message);
-            if (endWithNewLine) process.stdout.write('\n');
+            if (endWithNewLine) {
+                process.stdout.write(message + '\n');
+            } else {
+                process.stdout.write(message);
+            }
         }
     }
 
