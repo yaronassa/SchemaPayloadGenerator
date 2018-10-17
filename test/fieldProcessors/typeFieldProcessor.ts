@@ -52,7 +52,7 @@ describe('TypeFieldProcessor', () => {
 
     describe('Single value generation', () => {
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({});
+        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {payloadKeyTransform: source => source.toLowerCase()}});
 
         describe('Boolean values', () => {
             it('Correctly generates boolean values', async () => {
@@ -116,13 +116,47 @@ describe('TypeFieldProcessor', () => {
                 }
             });
 
-            it('Generates pairwise combinations', async () => {
+            it('Generates pairwise combinations for simple values', async () => {
                 const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'array', items: {type: 'string', enum: [1, 2, 3, 4, 5, 6]}}});
                 expect(result.length).to.equal(21);
                 expect(result.map(item => item.payload.join(',')).join(';')).to.equal('1;2;3;4;5;6;1,2;1,3;1,4;1,5;1,6;2,3;2,4;2,5;2,6;3,4;3,5;3,6;4,5;4,6;5,6');
             });
+
+            it('Does not create pairwise combinations for object types', async () => {
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {type: 'array', items: {type: 'object', required: ['some'], properties: {some: {type: 'boolean'}}}}
+                });
+                expect(result.length).to.equal(2);
+                expect(JSON.stringify(result.map(item => item.payload))).to.equal('[{"some":true},{"some":false}]');
+            });
         });
 
+        describe('Object values', () => {
+            it('Includes required fields in all variations', async () => {
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {type: 'object', required: ['some'], properties: {some: {type: 'boolean'}, thing: {type: 'integer'}, other: {type: 'string'}}}
+                });
+
+                expect(result.every(item => item.payload.some !== undefined)).to.equal(true);
+            });
+
+            it('Creates some variations without non-required fields', async () => {
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {type: 'object', required: ['some'], properties: {some: {type: 'boolean'}, thing: {type: 'integer'}, other: {type: 'string'}}}
+                });
+
+                expect(result.some(item => item.payload.other === undefined)).to.equal(true);
+                expect(result.some(item => item.payload.other !== undefined)).to.equal(true);
+            });
+
+            it('Creates a complete combination spread of all the fields', async () => {
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {type: 'object', required: ['some'], properties: {some: {type: 'boolean'}, thing: {type: 'integer'}, other: {type: 'string'}}}
+                });
+
+                expect(result.length).to.equal(16); // = 2 boolean, 3 integer + undefined, 1 string + undefined = 2X4X2 = 16
+            });
+        });
 
     });
 

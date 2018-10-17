@@ -168,14 +168,13 @@ class TypeFieldProcessor extends BaseFieldProcessor {
 
         const allObjectPayloadPossibilities: IFieldPossiblePayload[] = nonRequiredProperties.reduce((existingPayloads: IFieldPossiblePayload[], propKey: string) => {
             const possiblePropertyPayloads = propertiesPossiblePayloads[propKey];
-            const result: IFieldPossiblePayload[] = [];
+            const result: IFieldPossiblePayload[] = [].concat(existingPayloads);
 
             possiblePropertyPayloads.forEach(possibleNewPayload => {
                 const rawPayload = {};
                 rawPayload[possibleNewPayload.field.fieldTransformedKey] = possibleNewPayload.payload;
 
                 existingPayloads.forEach(existingPayload => {
-                    result.push(existingPayload);
                     const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
                     result.push({payload: enrichedRawPayload, field: existingPayload.field, parentPossiblePayload: existingPayload, id: ''});
                 });
