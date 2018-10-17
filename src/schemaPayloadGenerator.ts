@@ -1,17 +1,16 @@
 import {JSONSchema6} from "json-schema";
 import {BaseFieldProcessor} from "./schemaFieldProcessors/baseFieldProcessor";
 import {TypeFieldProcessor} from "./schemaFieldProcessors/typeFieldProcessor";
+import {CustomFieldProcessor, CustomProcessorFunction} from "./schemaFieldProcessors/customFieldProcessor";
 
 const assignDeep = require('assign-deep');
 const path = require('path');
 const refParser = require('json-schema-ref-parser');
-const bluebird = require('bluebird');
-
-type SchemaFieldProcessor = (field: IFieldProcessingData) => Promise<any>;
 
 interface ISchemaPayloadGeneratorOptions {
     silent?: boolean,
-    payloadKeyTransform?: (key: string) => string
+    payloadKeyTransform?: (key: string) => string,
+    customFieldProcessors?: CustomProcessorFunction | CustomProcessorFunction[]
 }
 
 interface IFieldProcessingData {
@@ -117,16 +116,22 @@ class SchemaPayloadGenerator {
 
     protected initFieldProcessors() {
         const processFieldByType = new TypeFieldProcessor(this);
-        this.fieldProcessors = [processFieldByType];
+        const customFieldProcessor = new CustomFieldProcessor(this);
+        this.fieldProcessors = [customFieldProcessor, processFieldByType];
     }
 
     private parseOptions(userOptions: ISchemaPayloadGeneratorOptions = {}): ISchemaPayloadGeneratorOptions {
         const defaults: ISchemaPayloadGeneratorOptions = {
             silent: true,
-            payloadKeyTransform: this.toCamelCase
+            payloadKeyTransform: this.toCamelCase,
+            customFieldProcessors: []
         };
 
-        return assignDeep({}, defaults, userOptions);
+        const layeredOptions = assignDeep({}, defaults, userOptions) as ISchemaPayloadGeneratorOptions;
+
+        if (!Array.isArray(layeredOptions.customFieldProcessors)) layeredOptions.customFieldProcessors = [layeredOptions.customFieldProcessors];
+
+        return layeredOptions;
     }
 
     private toCamelCase(name: string): string {
@@ -136,4 +141,4 @@ class SchemaPayloadGenerator {
 }
 
 
-export {SchemaPayloadGenerator, ISchemaPayloadGeneratorOptions, SchemaFieldProcessor, IFieldProcessingData, IFieldPossiblePayload};
+export {SchemaPayloadGenerator, ISchemaPayloadGeneratorOptions, IFieldProcessingData, IFieldPossiblePayload};
