@@ -1,10 +1,9 @@
 import {TypeFieldProcessor} from "../../src/schemaFieldProcessors/typeFieldProcessor";
 import {expect} from 'chai';
 import {it, describe} from 'mocha';
-import {IFieldPossiblePayload, IFieldProcessingData} from "../../src/schemaPayloadGenerator";
+import {IFieldPossiblePayload} from "../../src/schemaPayloadGenerator";
 
 const path = require('path');
-const testDataPath = path.resolve('test', 'testData');
 
 class DemoFieldProcessor extends TypeFieldProcessor {
 
@@ -52,7 +51,7 @@ describe('TypeFieldProcessor', () => {
 
     describe('Single value generation', () => {
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {payloadKeyTransform: source => source.toLowerCase()}});
+        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}});
 
         describe('Boolean values', () => {
             it('Correctly generates boolean values', async () => {
@@ -79,12 +78,26 @@ describe('TypeFieldProcessor', () => {
             });
 
             it('Allows specifying min and max ranges', async () => {
-                const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'integer', minimum: 5, maximum: 8}});
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {
+                        type: 'integer',
+                        minimum: 5,
+                        maximum: 8
+                    }
+                });
                 expect(result.map(fieldPayload => fieldPayload.payload).join(',')).to.match(/^5,8,[5678]$/);
             });
 
             it('Respects exclusiveMaximum, exclusiveMinimum', async () => {
-                const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'integer', minimum: 5, maximum: 8, exclusiveMinimum: true, exclusiveMaximum: true}});
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {
+                        type: 'integer',
+                        minimum: 5,
+                        maximum: 8,
+                        exclusiveMinimum: true,
+                        exclusiveMaximum: true
+                    }
+                });
                 expect(result.map(fieldPayload => fieldPayload.payload).join(',')).to.match(/^6,7,[67]$/);
             });
         });
@@ -96,12 +109,22 @@ describe('TypeFieldProcessor', () => {
             });
 
             it('Handles enum values', async () => {
-                const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'string', enum: ['a', 'b', 'c', 1]}});
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {
+                        type: 'string',
+                        enum: ['a', 'b', 'c', 1]
+                    }
+                });
                 expect(result.map(fieldPayload => fieldPayload.payload).join(',')).to.equal('a,b,c,1');
             });
 
             // string variations depend on https://github.com/json-schema-faker/json-schema-faker, no need to check them
         });
+    });
+    describe('Complex value generation', () => {
+
+        // @ts-ignore
+        const typeFieldProcessor = new TypeFieldProcessor({ report: () => {}, options: {payloadKeyTransform: source => source.toLowerCase()} });
 
         describe('Array values', () => {
             it('Generates arrays according to sub-type', async () => {
@@ -155,6 +178,16 @@ describe('TypeFieldProcessor', () => {
                 });
 
                 expect(result.length).to.equal(16); // = 2 boolean, 3 integer + undefined, 1 string + undefined = 2X4X2 = 16
+            });
+
+            it('Can handle nested objects', async () => {
+                const result = await typeFieldProcessor.generateFieldPayloads({
+                    schema: {type: 'object', properties: {some: {type: 'object', properties: {thing: {type: 'integer'}, other: {type: 'string'}}}}}
+                });
+
+                expect(result.length).to.equal(9);
+                // Inner object: 3 integer + undefined, 1 string + undefined = 4*2 = 8; Outer object: The inner + undefined = 9
+                expect(result.filter(item => item.payload.some !== undefined).some(item => item.payload.some.thing === 1)).to.equal(true);
             });
         });
 
