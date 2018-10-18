@@ -36,8 +36,11 @@ for (const possibility of possibilities) {
 }
 ```
 
-## Out-Of-The-Box usage
+## Documentation
 
+
+
+## Out-Of-The-Box usage
 
 ### Loading a schema
 Using schema payload generator always starts with loading a quasi-valid schema object. It doesn't have to be a full-blown by-the-book schema (though it can be) - even fragements lik e `{type: 'boolean'}` can work.
@@ -109,11 +112,98 @@ At the end, the value-generations is always done for a root Object type field (T
 
 These default values can be manipulated and overriden, as explained below.
 
-#### Limiting the combinations
+#### Limiting variations
+
+For simple schemas, the TD;LR version is enough. You load the schema, produce ~100 or so payload variations, and go on with your business.
+
+For complex schemas, however, the variation count will exponentially "exlode" and become unusable. Even a seemingly simple schema with a few well place `$ref` pointers can explode into many millions / billions of variations. Usually node will break before you do, but even if node doesn't crash on an out-of-memory error, that much data (and the runtime needed to produce it) will prove unusable.
+
+So, you'll have to limit the generated variations in some manner. This can be done through three mechanisms.
+
+- Override the value-generation for some of the types (e.g., make enum fields return only some of the variations).
+- Create other mechanisms to generate specific values, or even surpress value generation altogether (e.g. do no produce values for fields in a given object path / with a specific title)
+- Tweak the way value-combinations are generated (e.g. instead of creating a full pairwise array for big enums, take maximum 5 pair-combinations).
+
+All these are covered in the following section [Customising value generation](#customising-value-generation).
 
 ## Customising value generation
 
-## Options and extensions
+### Value combination tweaks
+
+
+
+### Custom type-specific generators
+
+This mechanism allows you to quickluy generate your own values for a specific schema type, via the `customTypeProcessors` field of the generator options object. For example, you might want to generate URIs in a given domain for a string URI value, or to always output the title of the field as its value. Just prepare a function that recieves the field schema object, and returns a promise that resolves to an array of raw-values, and you're good to go.
+
+```javascript
+const newStringProcessor = async (fieldSchema) => fieldSchema.title;
+const generator = new SchemaPayloadGenerator({options: {customTypeProcessors: {string: newStringProcessor}}});
+await generator.loadSchema({type: 'string', title: 'myTitle'});
+const payloads = await generator.generatePayloads();
+
+console.log(payloads[0].payload); // output = 'myTitle'
+```
+
+(of course you can have many type processors for any possible type).
+
+The entire value generation mechansim is asynchronous to allow for complex customizations (you can query a DB / API to generate values, have your own caches and enums, etc.).
+
+### Custom general generators
+
+Customizing the value generation for specific types is great, but you may want to control the value generation in a more nuanced manner. This requires a broader context, as well as the ability to inspect a field, without commiting to change its values beforehand.
+
+This can be achieved via the `customFieldProcessors` field of the generator options object. This field can be set to an array of custom processing functions, that will each be called in order. Each function can inspect the field and its context, and either return the values for the field, or `undefined`. If a function doesn't return values, the next funciton in line is called. If all custom functions are exausted, the generator will continue its regular generating process (including calling custom type-specific funciton, etc.).
+
+These functions get a much broader context than the type-specific custom function:
+
+```typescript
+(field: IFieldProcessingData, entireSchema: JSONSchema6, processorClass: CustomFieldProcessor) => Promise<any[]>;
+```
+
+Where the `field` parameter include the field's schema, parent, key name in parent and its full path; and the `processorClass` parameter is the `CustomFieldProcessor` class, which allows access to the generator, options, and other utility functions.
+
+**For example**: 
+
+```javascript
+const disallowFields = async (field, entireSchema, processorClass) => {
+	if (field.fieldFullPath === '/some/property/path') return [];
+	if (/^disallowedPrefix/i.test(field.schema.title)) return [];
+}
+
+const allowSpecificField = async (field, entireSchema, processorClass) => {
+	if (field.schema.title === 'disallowedPrefix but include this one') return ['A value'];
+}
+const generator = new SchemaPayloadGenerator({customFieldProcessors: [disallowFields, allowSpecificField]});
+await generator.loadSchema({type: 'string', title: 'disallowedPrefix but include this one'});
+let payloads = await generator.generatePayloads();
+
+console.log(payloads[0].payload); // output = 'A value'
+
+await generator.loadSchema({type: 'string', title: 'disallowedPrefix'});
+payloads = await generator.generatePayloads();
+
+console.log(payloads.length); // output = 0
+
+await generator.loadSchema({type: 'string', title: 'Other title'});
+payloads = await generator.generatePayloads();
+
+console.log(payloads[0].payload); // output = regular random output for a string value
+
+```
+
+The custom processors are executed in reverse order, so once `allowSpecificField`catches field in the 1st generation, it returns the payload `['A value']`.
+In the 2nd generation, the field slips by, and is caught by `disallowFields`, and 0 payloads are returned.
+Any other field will have these functions return `undefined`, and the payloads will be generated as usual.
+ 
+
+## Further customizations
+
+Schema payload generator was built with user-customization in mind. Beside the build-in customization mechanisms described above, all the classes were build to be inherited and extended.
+
+You'll find that all of the inner properties and methods that're relevant to value generation and field processing are `protected` (rather than `private`), to facilitate extending the class and overriding its members.
+
+Similaraly, the field processing classes extend a base class, which can be extended to achieve new functionality.
 
 
 

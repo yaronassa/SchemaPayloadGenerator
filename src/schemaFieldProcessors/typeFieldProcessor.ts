@@ -26,12 +26,22 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         if (fieldType === undefined && field.schema.enum) fieldType = 'string';
         if (fieldType === undefined && field.schema.properties) fieldType = 'object';
 
+        const customHandler = this.generator.options.customTypeProcessors[fieldType as string];
+        if (customHandler !== undefined) return this.executeCustomTypeProcessor(customHandler, field);
+
         const handler = this[`processSchemaField_${fieldType}`] as TypeHandler;
         if (handler === undefined) throw new Error(`Could not find a type handler for ${fieldType}`);
 
         const result = await handler.call(this, field);
 
         return result;
+    }
+
+    protected async executeCustomTypeProcessor(processor: (fieldSchema: JSONSchema6) => Promise<any>, field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        let rawValues = await processor(field.schema);
+        if (!Array.isArray(rawValues)) rawValues = [rawValues];
+
+        return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
     /** Generate values for a boolean field */

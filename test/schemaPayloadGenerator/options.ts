@@ -51,10 +51,25 @@ describe('SchemaPayloadGenerator Options', () => {
         });
 
         it('Can be set to a function array', async () => {
-            const myFunciton = () => 'worked';
+            const myFunction = () => 'worked';
             // @ts-ignores
-            const generator = new SchemaPayloadGenerator({customFieldProcessors: [myFunciton]});
+            const generator = new SchemaPayloadGenerator({customFieldProcessors: [myFunction]});
             expect((generator.options.customFieldProcessors as CustomProcessorFunction[])[0].call(this)).to.equal('worked');
+        });
+    });
+
+    describe('CustomTypeProcessors option', () => {
+        it('Defaults to an empty object', async () => {
+            const generator = new SchemaPayloadGenerator();
+            await generator.loadSchema({definitions: {some: {}}});
+            expect(generator.options.customTypeProcessors).to.deep.equal({});
+        });
+
+        it('Can be set to an object with function value', async () => {
+            const myFunction = () => 'worked';
+            // @ts-ignores
+            const generator = new SchemaPayloadGenerator({customTypeProcessors: {boolean: myFunction}});
+            expect((generator.options.customTypeProcessors.boolean).call(this)).to.equal('worked');
         });
     });
 

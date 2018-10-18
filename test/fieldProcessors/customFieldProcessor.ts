@@ -31,7 +31,7 @@ describe('CustomFieldProcessor', () => {
     });
 
     describe('Processing functionality', () => {
-       it('Can mask other processors', async () => {
+        it('Can mask other processors', async () => {
            const generator = new SchemaPayloadGenerator({customFieldProcessors: async () => ['worked']});
            await generator.loadSchema({type: 'boolean'});
 
@@ -39,12 +39,12 @@ describe('CustomFieldProcessor', () => {
 
            expect(result.length).to.equal(1);
            expect(result[0].payload).to.equal('worked');
-       });
+        });
 
-       it('Supports multiple processors that can override one another', async () => {
+        it('Supports multiple processors that can override one another', async () => {
             const processors = [
-                async (field: IFieldProcessingData) => (field.schema.title === 'override') ? [true] : undefined,
-                async (field: IFieldProcessingData) => (field.schema.type === 'boolean') ? [false] : undefined
+                async (field: IFieldProcessingData) => (field.schema.type === 'boolean') ? [false] : undefined,
+                async (field: IFieldProcessingData) => (field.schema.title === 'override') ? [true] : undefined
             ];
 
             const generator = new SchemaPayloadGenerator({customFieldProcessors: processors});
@@ -57,8 +57,18 @@ describe('CustomFieldProcessor', () => {
 
             result = await generator.generatePayloads();
             expect(result[0].payload).to.equal(true);
+        });
 
-       });
+        it('Transforms single raw value result into an array', async () => {
+            // @ts-ignore
+            const generator = new SchemaPayloadGenerator({customFieldProcessors: async () => 'worked'});
+            await generator.loadSchema({type: 'boolean'});
+
+            const result = await generator.generatePayloads();
+
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal('worked');
+        });
     });
 });
 

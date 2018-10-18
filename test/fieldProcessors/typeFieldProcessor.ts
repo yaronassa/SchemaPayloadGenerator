@@ -1,11 +1,17 @@
 import {TypeFieldProcessor} from "../../src/schemaFieldProcessors/typeFieldProcessor";
 import {expect} from 'chai';
 import {it, describe} from 'mocha';
-import {IFieldPossiblePayload} from "../../src/schemaPayloadGenerator";
+import {IFieldPossiblePayload, IFieldProcessingData} from "../../src/schemaPayloadGenerator";
+import {JSONSchema6} from "json-schema";
 
 const path = require('path');
 
 class DemoFieldProcessor extends TypeFieldProcessor {
+    protected async processSchemaField_boolean(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        const rawValues = [true];
+
+        return this.rawValuesToPossiblePayloads(rawValues, field);
+    }
 
 }
 
@@ -27,7 +33,7 @@ describe('TypeFieldProcessor', () => {
 
     describe('Ill defined schemas', () => {
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}});
+        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {customTypeProcessors: {}}});
 
         it('Correctly identifies typeless enum fields', async () => {
            const result = await typeFieldProcessor.generateFieldPayloads({schema: {enum: [1, 2]}});
@@ -51,7 +57,7 @@ describe('TypeFieldProcessor', () => {
 
     describe('Single value generation', () => {
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}});
+        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {customTypeProcessors: {}}});
 
         describe('Boolean values', () => {
             it('Correctly generates boolean values', async () => {
@@ -124,7 +130,7 @@ describe('TypeFieldProcessor', () => {
     describe('Complex value generation', () => {
 
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({ report: () => {}, options: {payloadKeyTransform: source => source.toLowerCase()} });
+        const typeFieldProcessor = new TypeFieldProcessor({ report: () => {}, options: {payloadKeyTransform: source => source.toLowerCase(), customTypeProcessors: {}} });
 
         describe('Array values', () => {
             it('Generates arrays according to sub-type', async () => {
@@ -191,6 +197,49 @@ describe('TypeFieldProcessor', () => {
             });
         });
 
+    });
+
+    describe('Customizations', () => {
+        it('Can be inherited and modified', async () => {
+            // @ts-ignore
+            const demoFieldProcessor = new DemoFieldProcessor({options: {customTypeProcessors: {}}});
+
+            const result = await demoFieldProcessor.generateFieldPayloads({schema: {type: 'boolean'}});
+
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal(true);
+        });
+
+        it('Can be overridden for specific types', async () => {
+            // @ts-ignore
+            const typeFieldProcessor = new TypeFieldProcessor({options: {customTypeProcessors: {boolean: async () => [false], string: async () => ['worked']}}});
+
+            let result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'boolean'}});
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal(false);
+
+            result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'string'}});
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal('worked');
+        });
+
+        it('Transforms single raw value result into an array', async () => {
+            // @ts-ignore
+            const typeFieldProcessor = new TypeFieldProcessor({options: {customTypeProcessors: {string: async () => 'single'}}});
+
+            const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'string'}});
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal('single');
+        });
+
+        it('Specific type customizations get the field schema as a parameter', async () => {
+            // @ts-ignore
+            const typeFieldProcessor = new TypeFieldProcessor({options: {customTypeProcessors: {string: async (fieldSchema: JSONSchema6) => [fieldSchema.title]}}});
+
+            const result = await typeFieldProcessor.generateFieldPayloads({schema: {type: 'string', title: 'myTitle'}});
+            expect(result.length).to.equal(1);
+            expect(result[0].payload).to.equal('myTitle');
+        });
     });
 
 });

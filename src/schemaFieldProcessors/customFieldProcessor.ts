@@ -15,7 +15,7 @@ class CustomFieldProcessor extends BaseFieldProcessor {
     protected readonly processingFunctions: CustomProcessorFunction[];
     constructor(generator: SchemaPayloadGenerator) {
         super(generator);
-        this.processingFunctions = generator.options.customFieldProcessors as CustomProcessorFunction[];
+        this.processingFunctions = (generator.options.customFieldProcessors as CustomProcessorFunction[] || []).reverse();
     }
 
     /**
@@ -31,6 +31,8 @@ class CustomFieldProcessor extends BaseFieldProcessor {
         }
 
         if (rawValues === undefined) return;
+
+        if (!Array.isArray(rawValues)) rawValues = [rawValues];
 
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }

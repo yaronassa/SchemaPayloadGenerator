@@ -16,7 +16,9 @@ interface ISchemaPayloadGeneratorOptions {
     /** Function to transform schema property keys to payload keys (e.g. tranform to camelCase) */
     payloadKeyTransform?: (key: string) => string,
     /** Functions to process schema fields in custom ways */
-    customFieldProcessors?: CustomProcessorFunction | CustomProcessorFunction[]
+    customFieldProcessors?: CustomProcessorFunction | CustomProcessorFunction[],
+    /** Functions to generate values for given types in custom ways */
+    customTypeProcessors?: {[type: string]: (fieldSchema: JSONSchema6) => Promise<any[]>}
 }
 
 /**
@@ -172,7 +174,8 @@ class SchemaPayloadGenerator {
         const defaults: ISchemaPayloadGeneratorOptions = {
             silent: true,
             payloadKeyTransform: this.toCamelCase,
-            customFieldProcessors: []
+            customFieldProcessors: [],
+            customTypeProcessors: {}
         };
 
         const layeredOptions = assignDeep({}, defaults, userOptions) as ISchemaPayloadGeneratorOptions;
