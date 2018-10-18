@@ -13,6 +13,10 @@
     "test",
     "pairwise"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaronassa/SchemaPayloadGenerator"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -26,7 +30,8 @@
     "lint": "./node_modules/.bin/tslint -p ./",
     "precommit": "./node_modules/.bin/ts-node devTools/processGitHooks.ts preCommit",
     "build": "tsc",
-    "docs": "typedoc --out docs --mode modules src",
+    "docs": "typedoc --out docs --mode file --target ES6 src/",
+    "docs:publish": "gh-pages -m \"[ci skip] Updates\" -d ./docs",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",
     "preversion": "npm run ci",
@@ -76,6 +81,7 @@
     "tslint": "^5.10.0",
     "husky": "^1.1.2",
     "typedoc": "^0.13.0",
-    "coveralls": "^3.0.2"
+    "coveralls": "^3.0.2",
+    "gh-pages": "^2.0.1"
   }
 }

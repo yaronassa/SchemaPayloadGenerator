@@ -38,6 +38,7 @@ for (const possibility of possibilities) {
 
 ## Documentation
 
+Project code documentation is available at the [github page](https://yaronassa.github.io/SchemaPayloadGenerator/).
 
 
 ## Out-Of-The-Box usage
@@ -45,7 +46,7 @@ for (const possibility of possibilities) {
 ### Loading a schema
 Using schema payload generator always starts with loading a quasi-valid schema object. It doesn't have to be a full-blown by-the-book schema (though it can be) - even fragements lik e `{type: 'boolean'}` can work.
 
-**Please note** Like the value generation itself, the `.loadSchema` command is asynchronous and returns a `Promise`.
+**Please note** Like the value generation itself, the [`.loadSchema`](https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#loadschema) command is asynchronous and returns a `Promise`.
 
 ```javascript
 import {SchemaPayloadGenerator} from 'schema-payload-generator'
@@ -69,7 +70,7 @@ The parser will resolve all local / remote references, $ref values, etc, so you 
 
 ### Generating values
 
-**Please note** Like the schema loading operations, the `generator.generatePayloads` command is asynchronous and returns a `Promise`. 
+**Please note** Like the schema loading operations, the [`.generatePayloads`](https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#generatepayloads) command is asynchronous and returns a `Promise`. 
 
 Once a schema is loaded, generating values is straightforward:
 
@@ -218,7 +219,7 @@ const customOptionalPayloadCombinationGenerator = (field: IFieldProcessingData, 
 
 ### Custom type-specific generators
 
-This mechanism allows you to quickluy generate your own values for a specific schema type, via the `customTypeProcessors` field of the generator options object. For example, you might want to generate URIs in a given domain for a string URI value, or to always output the title of the field as its value. Just prepare a function that recieves the field schema object, and returns a promise that resolves to an array of raw-values, and you're good to go.
+This mechanism allows you to quickluy generate your own values for a specific schema type, via the [`customTypeProcessors`](https://yaronassa.github.io/SchemaPayloadGenerator/interfaces/ischemapayloadgeneratoroptions.html#customtypeprocessors) field of the generator options object. For example, you might want to generate URIs in a given domain for a string URI value, or to always output the title of the field as its value. Just prepare a function that recieves the field schema object, and returns a promise that resolves to an array of raw-values, and you're good to go.
 
 ```javascript
 const newStringProcessor = async (fieldSchema) => fieldSchema.title;
@@ -237,7 +238,7 @@ The entire value generation mechansim is asynchronous to allow for complex custo
 
 Customizing the value generation for specific types is great, but you may want to control the value generation in a more nuanced manner. This requires a broader context, as well as the ability to inspect a field, without commiting to change its values beforehand.
 
-This can be achieved via the `customFieldProcessors` field of the generator options object. This field can be set to an array of custom processing functions, that will each be called in order. Each function can inspect the field and its context, and either return the values for the field, or `undefined`. If a function doesn't return values, the next funciton in line is called. If all custom functions are exausted, the generator will continue its regular generating process (including calling custom type-specific funciton, etc.).
+This can be achieved via the [`customFieldProcessors`](https://yaronassa.github.io/SchemaPayloadGenerator/interfaces/ischemapayloadgeneratoroptions.html#customfieldprocessors) field of the generator options object. This field can be set to an array of custom processing functions, that will each be called in order. Each function can inspect the field and its context, and either return the values for the field, or `undefined`. If a function doesn't return values, the next funciton in line is called. If all custom functions are exausted, the generator will continue its regular generating process (including calling custom type-specific funciton, etc.).
 
 These functions get a much broader context than the type-specific custom function:
 
