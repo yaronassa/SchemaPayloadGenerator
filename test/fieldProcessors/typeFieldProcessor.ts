@@ -3,7 +3,7 @@ import {it, describe} from 'mocha';
 import {IFieldPossiblePayload, IFieldProcessingData} from "../../src/schemaPayloadGenerator";
 import {JSONSchema6} from "json-schema";
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 class DemoFieldProcessor extends TypeFieldProcessor {
     protected async processSchemaField_boolean(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
