@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/yaronassa/SchemaPayloadGenerator.svg?branch=master)](https://travis-ci.org/yaronassa/SchemaPayloadGenerator) 
 [![Coverage Status](https://coveralls.io/repos/github/yaronassa/SchemaPayloadGenerator/badge.svg?branch=master)](https://coveralls.io/github/yaronassa/SchemaPayloadGenerator?branch=master)
 
+[Project on GitHub](https://github.com/yaronassa/SchemaPayloadGenerator)
+
 Schema payload generator allows you to generate all* possible payload combination for objects in your schema.
 You can use these payloads for unit/api tests, examples, etc.
 
@@ -51,7 +53,7 @@ Using schema payload generator always starts with loading a quasi-valid schema o
 ```javascript
 import {SchemaPayloadGenerator} from 'schema-payload-generator'
 const generator = new SchemaPayloadGenerator();
-await generator.loadSchema({type: 'object', properties: {myBool: {type: 'boolean}}});
+await generator.loadSchema({type: 'object', properties: {myBool: {type: 'boolean'}}});
 ```
 
 Alternatively You can send a relative path to a an external file that will be required.
