@@ -65,8 +65,8 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="schema-payload-generator">Schema Payload Generator</h1>
-				<p><a href="https://travis-ci.org/%3Cusername%3E/%3Creponame%3E"><img src="https://travis-ci.org/<username>/<reponame>.svg?branch=master" alt="Build Status"></a>
-				<a href="https://coveralls.io/github/%3Cusername%3E/%3Creponame%3E?branch=master"><img src="https://coveralls.io/repos/github/<username>/<reponame>/badge.svg?branch=master" alt="Coverage Status"></a></p>
+				<p><a href="https://travis-ci.org/yaronassa/SchemaPayloadGenerator"><img src="https://travis-ci.org/yaronassa/SchemaPayloadGenerator.svg?branch=master" alt="Build Status"></a>
+				<a href="https://coveralls.io/github/yaronassa/SchemaPayloadGenerator?branch=master"><img src="https://coveralls.io/repos/github/yaronassa/SchemaPayloadGenerator/badge.svg?branch=master" alt="Coverage Status"></a></p>
 				<p>Schema payload generator allows you to generate all* possible payload combination for objects in your schema.
 				You can use these payloads for unit/api tests, examples, etc.</p>
 				<p>(* Well, obviously not <em>ALL</em> possibilities, but multiple values per field, with cumulative combinations for arrays and objects)</p>
@@ -85,10 +85,11 @@
     <span class="hljs-keyword">await</span> myAPIClient.get(possibility.payload);
 }</code></pre>
 				<h2 id="documentation">Documentation</h2>
+				<p>Project code documentation is available at the <a href="https://yaronassa.github.io/SchemaPayloadGenerator/">github page</a>.</p>
 				<h2 id="out-of-the-box-usage">Out-Of-The-Box usage</h2>
 				<h3 id="loading-a-schema">Loading a schema</h3>
 				<p>Using schema payload generator always starts with loading a quasi-valid schema object. It doesn&#39;t have to be a full-blown by-the-book schema (though it can be) - even fragements lik e <code>{type: &#39;boolean&#39;}</code> can work.</p>
-				<p><strong>Please note</strong> Like the value generation itself, the <code>.loadSchema</code> command is asynchronous and returns a <code>Promise</code>.</p>
+				<p><strong>Please note</strong> Like the value generation itself, the <a href="https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#loadschema"><code>.loadSchema</code></a> command is asynchronous and returns a <code>Promise</code>.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> {SchemaPayloadGenerator} <span class="hljs-keyword">from</span> <span class="hljs-string">'schema-payload-generator'</span>
 <span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> SchemaPayloadGenerator();
 <span class="hljs-keyword">await</span> generator.loadSchema({<span class="hljs-attr">type</span>: <span class="hljs-string">'object'</span>, <span class="hljs-attr">properties</span>: {<span class="hljs-attr">myBool</span>: {<span class="hljs-attr">type</span>: <span class="hljs-string">'boolean}}});</span></code></pre>
@@ -98,7 +99,7 @@
 				<pre><code class="language-javascript"><span class="hljs-keyword">await</span> generator.loadSchema(<span class="hljs-string">'./pathToFile.json'</span>, {<span class="hljs-attr">dereference</span>: {<span class="hljs-attr">circular</span>: <span class="hljs-literal">false</span>}});</code></pre>
 				<p>The parser will resolve all local / remote references, $ref values, etc, so you don&#39;t need to prepare / change your schemas.</p>
 				<h3 id="generating-values">Generating values</h3>
-				<p><strong>Please note</strong> Like the schema loading operations, the <code>generator.generatePayloads</code> command is asynchronous and returns a <code>Promise</code>. </p>
+				<p><strong>Please note</strong> Like the schema loading operations, the <a href="https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#generatepayloads"><code>.generatePayloads</code></a> command is asynchronous and returns a <code>Promise</code>. </p>
 				<p>Once a schema is loaded, generating values is straightforward:</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> possibilities = <span class="hljs-keyword">await</span> generator.generatePayloads();
 
@@ -173,6 +174,60 @@
 				<p>All these are covered in the following section <a href="#customising-value-generation">Customising value generation</a>.</p>
 				<h2 id="customising-value-generation">Customising value generation</h2>
 				<h3 id="value-combination-tweaks">Value combination tweaks</h3>
+				<p>There are several field types that are responsible for combining values and generating massive amounts of these combinations. Specifically, array-type and object-type fields &quot;explode&quot; their inner-fields variations into multiple combinations. By tweaking these combination tweaks, you can significantly reduce the number of produce value variations.</p>
+				<h4 id="arrays">Arrays</h4>
+				<p>The default processing for an array field is to include each of its sub-field possible values, as well as every non-repeating-pair-combination between these values. So the schema field <code>{type: &#39;array&#39;, items: {type: &#39;boolean&#39;}}</code> will produce these possible sub-field values: <code>[true, false]</code>. These will be exploded into the array possibilities of <code>[[true], [false], [true, false]]</code>. Every value is included once, then every value pair.</p>
+				<p>This may not seem that bad, but imagine an array of an enum field with 8 possible values. The array possible values count will be 8 original values + 7 pairs for the 1st value + 6 for the 2nd + ... + 1 pair for the 7th = <strong>total of 36 value combinations</strong>.</p>
+				<p>You can control and limit the way these variations are generated via the <code>combinations.arrays</code> field in the generator options.</p>
+				<p><strong>maxCombinations</strong>:</p>
+				<p>Set <code>arrays.maxCombinations</code> to an integer to crudly truncate the array possible values. The remaining values may or may not include the original single-values, dependent on how much was trunced. </p>
+				<p><strong>combinationGenerator</strong>:</p>
+				<p>For even more control, set this option to your custom function, and generate the value combinations yourself. Returning an undefined result will fallback to the default behaviour:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> customCombinationGenerator = (field: IFieldProcessingData, <span class="hljs-attr">subFieldRawValues</span>: any[]): any[][] =&gt; {
+   <span class="hljs-comment">// Return your values here.</span>
+   <span class="hljs-comment">// Remember, it should be an array of arrays</span>
+   <span class="hljs-comment">// For example</span>
+   <span class="hljs-keyword">return</span> subFieldRawValues.reverse().map(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> [item]);
+};</code></pre>
+				<h4 id="objects">Objects</h4>
+				<p>The default processing for an object field is to get all possible variations for all property fields, than build every possible variation combination between all the properties (non-mandatory properties are added an <code>undefined</code> possible value for the combination matrix).</p>
+				<p>Understandably, this process creates <strong>huge</strong> amounts of payload variations. An object field with 5 properties can easily have a few hundred payload variations, a few thousands if some of those are array properties. Given this, the limit mechanisms for object combinations are more substantial.</p>
+				<p><strong>maxPropertyCombinations</strong>:</p>
+				<p>Set <code>objects.maxPropertyCombinations</code> to an integer to crudly truncate each object property possible values, before they are combined in the object payloads. This does <strong>not</strong> affect non-mandatory fields gaining the additional <code>undefined</code> option.</p>
+				<p>e.g. if an object has a boolean property, setting <code>maxPropertyCombinations</code> to 1, will cause the boolean property to contribute only 1 possibility to the payload combinations matrix (compared to the 2 it usually does). The total payload count for that object may still be very high.</p>
+				<p><strong>maxObjectPayloadCombinations</strong>:</p>
+				<p>Set <code>objects.maxObjectPayloadCombinations</code> to an integer to crudly truncate the object&#39;s generated payloads count.</p>
+				<p>e.g. if an object have a boolean property and a string property, setting <code>maxObjectPayloadCombinations</code> to 1, will cause the object to have only 1 possible payload (compared to the 6 - <em>2 + undefined for the boolean X 1 + undefined for the string</em>) it usually does).</p>
+				<p><strong>minimalPayloadCombinationGenerator</strong>:</p>
+				<p>For even more control, set this option to your custom function, and generate the value combinations yourself. This function is responsible for generating the minimial payloads, i.e. payloads that contain all the required fields. Returning an undefined result will fallback to the default behaviour:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> customMinimalPayloadCombinationGenerator = (objectField: IFieldProcessingData, <span class="hljs-attr">requiredPropertiesPossibilities</span>: {[key: string]: IFieldPossiblePayload[]}): any[] =&gt; {
+   <span class="hljs-comment">// Return your payloads here.</span>
+   <span class="hljs-comment">// Remember, EVERY payload MUST include all properties (they are required)</span>
+   <span class="hljs-comment">// For example - return 1 payload with the 1st possibility from each property</span>
+
+   <span class="hljs-keyword">const</span> payload = {};
+   <span class="hljs-built_in">Object</span>.keys(requiredPropertiesPossibilities).forEach(<span class="hljs-function"><span class="hljs-params">propertyKey</span> =&gt;</span> {
+       payload[propertyKey] = requiredPropertiesPossibilities[propertyKey][<span class="hljs-number">0</span>].payload;
+   });
+
+   <span class="hljs-keyword">return</span> [payload];
+};</code></pre>
+				<p><strong>optionalPayloadCombinationsGenerator</strong>:
+					This function is responsible for enriching each minimal payload with non-mandatory fields.
+					Each payload this funciton returns will be combined with <strong>all</strong> the minimal payloads. So if the function returns 3 payload possibilities for the optional fields, and there are 2 minimal payload possibilities, we&#39;ll get a total of 2X4 (3 + undefined)=8 payload possibilities.
+				Returning an undefined result will fallback to the default behaviour.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> customOptionalPayloadCombinationGenerator = (field: IFieldProcessingData, <span class="hljs-attr">generatedMinimalPayloads</span>: IFieldPossiblePayload[], <span class="hljs-attr">optionalPropertiesPossibilities</span>: {[key: string]: IFieldPossiblePayload[]}): any[] =&gt; {
+   <span class="hljs-comment">// Return your payloads here.</span>
+   <span class="hljs-comment">// No need to return the undefined payload - it will be added automatically</span>
+   <span class="hljs-comment">// For example - return 1 payload with the 1st possibility from each property</span>
+
+   <span class="hljs-keyword">const</span> payload = {};
+   <span class="hljs-built_in">Object</span>.keys(optionalPropertiesPossibilities).forEach(<span class="hljs-function"><span class="hljs-params">propertyKey</span> =&gt;</span> {
+       payload[propertyKey] = optionalPropertiesPossibilities[propertyKey][<span class="hljs-number">0</span>].payload;
+   });
+
+   <span class="hljs-keyword">return</span> [payload];
+};</code></pre>
 				<h3 id="custom-type-specific-generators">Custom type-specific generators</h3>
 				<p>This mechanism allows you to quickluy generate your own values for a specific schema type, via the <code>customTypeProcessors</code> field of the generator options object. For example, you might want to generate URIs in a given domain for a string URI value, or to always output the title of the field as its value. Just prepare a function that recieves the field schema object, and returns a promise that resolves to an array of raw-values, and you&#39;re good to go.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> newStringProcessor = <span class="hljs-keyword">async</span> (fieldSchema) =&gt; fieldSchema.title;
