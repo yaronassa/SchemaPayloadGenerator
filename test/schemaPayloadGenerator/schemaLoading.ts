@@ -9,6 +9,15 @@ const sinon = require('sinon');
 
 describe('SchemaPayloadGenerator Basic Schema loading', () => {
 
+    it('Passes options to the schema parser', async () => {
+        const generator = new SchemaPayloadGenerator();
+        const circularSchema = {definitions: {some: {type: 'object', properties: {circ: {$ref: '#/definitions/thing'}}}, thing: {$ref: '#/definitions/some'}}};
+        // @ts-ignore
+        await expect(generator.loadSchema(circularSchema, {dereference: {circular: false}})).to.rejectedWith(/Failed to parse schema: Circular/);
+        // @ts-ignore
+        await expect(generator.loadSchema(circularSchema, {dereference: {circular: true}})).not.to.be.rejected;
+    });
+
     describe('Invalid schemas', () => {
         it('Cannot call loadSchema without a schema option', async () => {
             const generator = new SchemaPayloadGenerator();
