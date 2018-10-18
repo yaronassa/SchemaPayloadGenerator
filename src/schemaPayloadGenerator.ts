@@ -24,9 +24,19 @@ interface ISchemaPayloadGeneratorOptions {
         arrays?: {
             /**  Simply limit the combination number */
             maxCombinations?: number,
+            /**  Custom function to generate array combinations */
             combinationGenerator?: (field: IFieldProcessingData, subFieldRawValues: any[]) => any[][]
         },
-        objects?: {}
+        objects?: {
+            /**  Simply limit the combination number for each property */
+            maxPropertiesCombinations?: number,
+            /**  Simply limit the total combinations object may have */
+            maxObjectPayloadCombinations?: number,
+            /**  Custom function to generate object minial payloads combinations */
+            minimalPayloadCombinationGenerator?: (field: IFieldProcessingData, requiredPropertiesPossibilities: {[key: string]: IFieldPossiblePayload[]}) => any[],
+            optionalPayloadCombinationsGenerator?: (field: IFieldProcessingData, generatedMinimalPayloads: IFieldPossiblePayload[],
+                                                    optionalPropertiesPossibilities: {[key: string]: IFieldPossiblePayload[]}) => any[]
+        }
     }
 }
 

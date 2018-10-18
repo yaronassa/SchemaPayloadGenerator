@@ -84,9 +84,13 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         const possibleSubFieldVariations = await this.generateFieldPayloads(subField);
 
         let arrayVariations: IFieldPossiblePayload[];
+        let rawValues;
 
         if (combinationsLimiters.combinationGenerator !== undefined) {
-            const rawValues = combinationsLimiters.combinationGenerator(field, possibleSubFieldVariations.map(item => item.payload));
+            rawValues = combinationsLimiters.combinationGenerator(field, possibleSubFieldVariations.map(item => item.payload));
+        }
+
+        if (rawValues !== undefined) {
             arrayVariations = this.rawValuesToPossiblePayloads(rawValues, field);
         } else {
 
@@ -153,6 +157,8 @@ class TypeFieldProcessor extends BaseFieldProcessor {
             return this.generateFieldPayloads(subField);
         }
 
+        const combinationsLimiters = this.generator.options.combinations.objects;
+
         const fieldPropertiesPossiblePayloads = await bluebird.reduce(Object.keys(field.schema.properties), async (acc, propertyKey: string) => {
             const propertySchemaField = field.schema.properties[propertyKey] as JSONSchema6;
             const propertyField: IFieldProcessingData = {
@@ -163,7 +169,10 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 fieldFullPath: field.fieldFullPath + '/' + propertyKey
             };
 
-            const propertyVariations = await this.generateFieldPayloads(propertyField);
+            let propertyVariations = await this.generateFieldPayloads(propertyField);
+            if (combinationsLimiters.maxPropertiesCombinations !== undefined) {
+                propertyVariations = propertyVariations.slice(0, combinationsLimiters.maxPropertiesCombinations);
+            }
 
             acc[propertyKey] = propertyVariations;
             return acc;
@@ -180,48 +189,96 @@ class TypeFieldProcessor extends BaseFieldProcessor {
     /** Turn an object field's possibilities tree into actual payloads */
     protected flattenObjectPropertiesToPayloads(field: IFieldProcessingData, propertiesPossiblePayloads: {[key: string]: IFieldPossiblePayload[]}): IFieldPossiblePayload[] {
 
-        const minialPayloads: IFieldPossiblePayload[] = (field.schema.required || []).reduce((existingPayloads: IFieldPossiblePayload[], requiredKey: string) => {
-            const possiblePropertyPayloads = propertiesPossiblePayloads[requiredKey];
-            const result: IFieldPossiblePayload[] = [];
+        const combinationsLimiters = this.generator.options.combinations.objects;
+        let minialPayloads: IFieldPossiblePayload[];
 
-            possiblePropertyPayloads.forEach(possibleNewPayload => {
-                const rawPayload = {};
-                rawPayload[possibleNewPayload.field.fieldTransformedKey] = possibleNewPayload.payload;
+        if (combinationsLimiters.minimalPayloadCombinationGenerator !== undefined) {
+            const requiredPropertiesPossibilities = (field.schema.required || []).reduce((acc: {[key: string]: IFieldPossiblePayload[]}, requiredKey: string) => {
+                acc[requiredKey] =  propertiesPossiblePayloads[requiredKey];
+                return acc;
+            }, {});
+            let rawPayloads = combinationsLimiters.minimalPayloadCombinationGenerator(field, requiredPropertiesPossibilities);
+            if (rawPayloads !== undefined) {
+                if (!Array.isArray(rawPayloads)) rawPayloads = [rawPayloads];
+                minialPayloads = rawPayloads.map(payload => ({payload, field, id: '' }));
+            }
+        }
 
-                existingPayloads.forEach(existingPayload => {
-                    const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
-                    result.push({
+        if (minialPayloads === undefined) {
+            minialPayloads = (field.schema.required || []).reduce((existingPayloads: IFieldPossiblePayload[], requiredKey: string) => {
+                const possiblePropertyPayloads = propertiesPossiblePayloads[requiredKey];
+                const result: IFieldPossiblePayload[] = [];
+
+                possiblePropertyPayloads.forEach(possibleNewPayload => {
+                    if (combinationsLimiters.maxObjectPayloadCombinations !== undefined && result.length >= combinationsLimiters.maxObjectPayloadCombinations) return;
+                    const rawPayload = {};
+                    rawPayload[possibleNewPayload.field.fieldTransformedKey] = possibleNewPayload.payload;
+
+                    existingPayloads.forEach(existingPayload => {
+                        if (combinationsLimiters.maxObjectPayloadCombinations !== undefined && result.length >= combinationsLimiters.maxObjectPayloadCombinations) return;
+                        const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
+                        result.push({
                             payload: enrichedRawPayload,
                             field: existingPayload.field,
                             parentPossiblePayload: possibleNewPayload.parentPossiblePayload,
                             id: ''
+                        });
                     });
                 });
-            });
 
 
-            // TODO: Mark these as minimal payloads, and only create such payloads from child-properties minimal payloads as well
-            return result;
-        }, [{field, payload: {}, id: ''}]) || [];
+                // TODO: Mark these as minimal payloads, and only create such payloads from child-properties minimal payloads as well
+                return result;
+            }, [{field, payload: {}, id: ''}]) || [];
+        }
+
+
 
         const nonRequiredProperties = Object.keys(propertiesPossiblePayloads).filter(prop => (field.schema.required || []).indexOf(prop) < 0);
 
-        const allObjectPayloadPossibilities: IFieldPossiblePayload[] = nonRequiredProperties.reduce((existingPayloads: IFieldPossiblePayload[], propKey: string) => {
-            const possiblePropertyPayloads = propertiesPossiblePayloads[propKey];
-            const result: IFieldPossiblePayload[] = [].concat(existingPayloads);
+        let allObjectPayloadPossibilities: IFieldPossiblePayload[];
 
-            possiblePropertyPayloads.forEach(possibleNewPayload => {
-                const rawPayload = {};
-                rawPayload[possibleNewPayload.field.fieldTransformedKey] = possibleNewPayload.payload;
+        if (combinationsLimiters.optionalPayloadCombinationsGenerator !== undefined) {
+            const optionalPropertiesPossibilities = nonRequiredProperties.reduce((acc: {[key: string]: IFieldPossiblePayload[]}, requiredKey: string) => {
+                acc[requiredKey] =  propertiesPossiblePayloads[requiredKey];
+                return acc;
+            }, {});
+            let rawPayloads = combinationsLimiters.optionalPayloadCombinationsGenerator(field, minialPayloads, optionalPropertiesPossibilities);
+            if (rawPayloads !== undefined) {
+                if (!Array.isArray(rawPayloads)) rawPayloads = [rawPayloads];
+                allObjectPayloadPossibilities = rawPayloads.reduce((existingPayloads: IFieldPossiblePayload[], rawPayload: any) => {
+                    const result: IFieldPossiblePayload[] = [].concat(existingPayloads);
 
-                existingPayloads.forEach(existingPayload => {
-                    const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
-                    result.push({payload: enrichedRawPayload, field: existingPayload.field, parentPossiblePayload: existingPayload, id: ''});
+                    existingPayloads.forEach(existingPayload => {
+                        const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
+                        result.push({payload: enrichedRawPayload, field: existingPayload.field, parentPossiblePayload: existingPayload, id: ''});
+                    });
+
+                    return result;
+                }, minialPayloads);
+            }
+        }
+
+        if (allObjectPayloadPossibilities === undefined) {
+            allObjectPayloadPossibilities = nonRequiredProperties.reduce((existingPayloads: IFieldPossiblePayload[], propKey: string) => {
+                const possiblePropertyPayloads = propertiesPossiblePayloads[propKey];
+                const result: IFieldPossiblePayload[] = [].concat(existingPayloads);
+
+                possiblePropertyPayloads.forEach(possibleNewPayload => {
+                    if (combinationsLimiters.maxObjectPayloadCombinations !== undefined && result.length >= combinationsLimiters.maxObjectPayloadCombinations) return;
+                    const rawPayload = {};
+                    rawPayload[possibleNewPayload.field.fieldTransformedKey] = possibleNewPayload.payload;
+
+                    existingPayloads.forEach(existingPayload => {
+                        if (combinationsLimiters.maxObjectPayloadCombinations !== undefined && result.length >= combinationsLimiters.maxObjectPayloadCombinations) return;
+                        const enrichedRawPayload = assignDeep({}, existingPayload.payload, rawPayload);
+                        result.push({payload: enrichedRawPayload, field: existingPayload.field, parentPossiblePayload: existingPayload, id: ''});
+                    });
                 });
-            });
 
-            return result;
-        }, minialPayloads);
+                return result;
+            }, minialPayloads);
+        }
 
         allObjectPayloadPossibilities.forEach((possiblePayload, index) => possiblePayload.id = this.generatePayloadID(field, index));
 

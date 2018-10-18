@@ -33,7 +33,7 @@ describe('TypeFieldProcessor', () => {
 
     describe('Ill defined schemas', () => {
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {customTypeProcessors: {}}});
+        const typeFieldProcessor = new TypeFieldProcessor({report: () => {}, options: {customTypeProcessors: {}, combinations: {objects: {}}}});
 
         it('Correctly identifies typeless enum fields', async () => {
            const result = await typeFieldProcessor.generateFieldPayloads({schema: {enum: [1, 2]}});
@@ -131,7 +131,7 @@ describe('TypeFieldProcessor', () => {
 
         // @ts-ignore
         const typeFieldProcessor = new TypeFieldProcessor({ report: () => {}, options: {
-            payloadKeyTransform: source => source.toLowerCase(), customTypeProcessors: {}, combinations: {arrays: {}}}
+            payloadKeyTransform: source => source.toLowerCase(), customTypeProcessors: {}, combinations: {arrays: {}, objects: {}}}
         });
 
         describe('Array values', () => {

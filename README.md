@@ -152,11 +152,69 @@ For even more control, set this option to your custom function, and generate the
 const customCombinationGenerator = (field: IFieldProcessingData, subFieldRawValues: any[]): any[][] => {
    // Return your values here.
    // Remember, it should be an array of arrays
-   // For examples
+   // For example
    return subFieldRawValues.reverse().map(item => [item]);
 };
 ```
- 
+
+#### Objects
+
+The default processing for an object field is to get all possible variations for all property fields, than build every possible variation combination between all the properties (non-mandatory properties are added an `undefined` possible value for the combination matrix).
+
+Understandably, this process creates **huge** amounts of payload variations. An object field with 5 properties can easily have a few hundred payload variations, a few thousands if some of those are array properties. Given this, the limit mechanisms for object combinations are more substantial.
+
+**maxPropertyCombinations**:
+
+Set `objects.maxPropertyCombinations` to an integer to crudly truncate each object property possible values, before they are combined in the object payloads. This does **not** affect non-mandatory fields gaining the additional `undefined` option.
+
+e.g. if an object has a boolean property, setting `maxPropertyCombinations` to 1, will cause the boolean property to contribute only 1 possibility to the payload combinations matrix (compared to the 2 it usually does). The total payload count for that object may still be very high.
+
+**maxObjectPayloadCombinations**:
+
+Set `objects.maxObjectPayloadCombinations` to an integer to crudly truncate the object's generated payloads count.
+
+e.g. if an object have a boolean property and a string property, setting `maxObjectPayloadCombinations` to 1, will cause the object to have only 1 possible payload (compared to the 6 - *2 + undefined for the boolean X 1 + undefined for the string*) it usually does).
+
+**minimalPayloadCombinationGenerator**:
+
+For even more control, set this option to your custom function, and generate the value combinations yourself. This function is responsible for generating the minimial payloads, i.e. payloads that contain all the required fields. Returning an undefined result will fallback to the default behaviour:
+
+
+```javascript
+const customMinimalPayloadCombinationGenerator = (objectField: IFieldProcessingData, requiredPropertiesPossibilities: {[key: string]: IFieldPossiblePayload[]}): any[] => {
+   // Return your payloads here.
+   // Remember, EVERY payload MUST include all properties (they are required)
+   // For example - return 1 payload with the 1st possibility from each property
+   
+   const payload = {};
+   Object.keys(requiredPropertiesPossibilities).forEach(propertyKey => {
+	   payload[propertyKey] = requiredPropertiesPossibilities[propertyKey][0].payload;
+   });
+   
+   return [payload];
+};
+```
+
+
+**optionalPayloadCombinationsGenerator**:
+This function is responsible for enriching each minimal payload with non-mandatory fields. 
+Each payload this funciton returns will be combined with **all** the minimal payloads. So if the function returns 3 payload possibilities for the optional fields, and there are 2 minimal payload possibilities, we'll get a total of 2X4 (3 + undefined)=8 payload possibilities.
+Returning an undefined result will fallback to the default behaviour.
+
+```javascript
+const customOptionalPayloadCombinationGenerator = (field: IFieldProcessingData, generatedMinimalPayloads: IFieldPossiblePayload[], optionalPropertiesPossibilities: {[key: string]: IFieldPossiblePayload[]}): any[] => {
+   // Return your payloads here.
+   // No need to return the undefined payload - it will be added automatically
+   // For example - return 1 payload with the 1st possibility from each property
+   
+   const payload = {};
+   Object.keys(optionalPropertiesPossibilities).forEach(propertyKey => {
+	   payload[propertyKey] = optionalPropertiesPossibilities[propertyKey][0].payload;
+   });
+   
+   return [payload];
+};
+```
 
 ### Custom type-specific generators
 
