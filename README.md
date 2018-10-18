@@ -1,7 +1,7 @@
 # Schema Payload Generator
 
-[![Build Status](https://travis-ci.org/<username>/<reponame>.svg?branch=master)](https://travis-ci.org/<username>/<reponame>) 
-[![Coverage Status](https://coveralls.io/repos/github/<username>/<reponame>/badge.svg?branch=master)](https://coveralls.io/github/<username>/<reponame>?branch=master)
+[![Build Status](https://travis-ci.org/yaronassa/SchemaPayloadGenerator.svg?branch=master)](https://travis-ci.org/yaronassa/SchemaPayloadGenerator) 
+[![Coverage Status](https://coveralls.io/repos/github/yaronassa/SchemaPayloadGenerator/badge.svg?branch=master)](https://coveralls.io/github/yaronassa/SchemaPayloadGenerator?branch=master)
 
 Schema payload generator allows you to generate all* possible payload combination for objects in your schema.
 You can use these payloads for unit/api tests, examples, etc.
