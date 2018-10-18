@@ -6,11 +6,31 @@
     "email": "yaron.assa@gmail.com"
   },
   "version": "0.0.1",
+  "keywords": [
+    "json",
+    "jsonschema",
+    "mocks",
+    "test",
+    "pairwise"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "license": "MIT",
   "scripts": {
     "test": "mocha -r ts-node/register -r ./test/setup/setup.ts test/**/*.ts",
-    "coverage": "nyc mocha  -r ts-node/register -r source-map-support/register --full-trace --bail -r ./test/setup/setup.ts test/**/*.ts",
+    "coverage": "nyc mocha -r ts-node/register -r source-map-support/register --full-trace --bail -r ./test/setup/setup.ts test/**/*.ts -R spec",
+    "reportCoverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "./node_modules/.bin/tslint -p ./",
-    "precommit": "./node_modules/.bin/ts-node devTools/processGitHooks.ts preCommit"
+    "precommit": "./node_modules/.bin/ts-node devTools/processGitHooks.ts preCommit",
+    "build": "tsc",
+    "docs": "typedoc --out docs --mode modules src",
+    "postversion": "git push && git push --tags",
+    "prepublishOnly": "npm run ci",
+    "preversion": "npm run ci",
+    "ci": "npm run lint && npm run build && npm run coverage"
   },
   "nyc": {
     "include": [
@@ -54,6 +74,8 @@
     "source-map-support": "^0.5.9",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
-    "husky": "^1.1.2"
+    "husky": "^1.1.2",
+    "typedoc": "^0.13.0",
+    "coveralls": "^3.0.2"
   }
 }

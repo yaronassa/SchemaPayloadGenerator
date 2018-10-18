@@ -2,35 +2,60 @@ import {JSONSchema6} from "json-schema";
 import {BaseFieldProcessor} from "./schemaFieldProcessors/baseFieldProcessor";
 import {TypeFieldProcessor} from "./schemaFieldProcessors/typeFieldProcessor";
 import {CustomFieldProcessor, CustomProcessorFunction} from "./schemaFieldProcessors/customFieldProcessor";
+import $RefParser from "json-schema-ref-parser";
 
 const assignDeep = require('assign-deep');
 const path = require('path');
 const refParser = require('json-schema-ref-parser');
 
 interface ISchemaPayloadGeneratorOptions {
+    /** Suppress logging
+     * @default true
+     */
     silent?: boolean,
+    /** Function to transform schema property keys to payload keys (e.g. tranform to camelCase) */
     payloadKeyTransform?: (key: string) => string,
+    /** Functions to process schema fields in custom ways */
     customFieldProcessors?: CustomProcessorFunction | CustomProcessorFunction[]
 }
 
+/**
+ * JSON Schema field, including metadata needed for processing
+ */
 interface IFieldProcessingData {
+    /** The field's real parent (i.e. not the .items or .oneOf nodes, but the real object parent) */
     parent?: IFieldProcessingData,
+    /** The JSON schema fragment for this field */
     schema: JSONSchema6,
+    /** The field name in the parent object properties */
     fieldKeyInParent: string,
+    /** The field name in the parent object properties, after it was transformed */
     fieldTransformedKey: string,
+    /** The field full key path from the root object, through parents, including this field */
     fieldFullPath: string
 }
 
+/**
+ * A generated possible payload for a field, including generation metadata and context
+ */
 interface IFieldPossiblePayload {
+    /** The original field */
     field: IFieldProcessingData,
+    /** The actual payload fragment */
     payload: any,
+    /** The parent payload possibility this one extends */
     parentPossiblePayload?: IFieldPossiblePayload,
     id: string
 }
 
+/**
+ * Generates possible payloads according to a JSON schema
+ */
 class SchemaPayloadGenerator {
     public readonly options: ISchemaPayloadGeneratorOptions;
+    /** The master schema to work from */
     public schema: JSONSchema6;
+    /** Processing classes for the schema fields */
     protected fieldProcessors: BaseFieldProcessor[];
 
     constructor(options?: ISchemaPayloadGeneratorOptions) {
@@ -38,6 +63,11 @@ class SchemaPayloadGenerator {
         this.initFieldProcessors();
     }
 
+    /**
+     * Reports a message to stdout
+     * @param message The message to report
+     * @param endWithNewLine End the message with a new line (similar to console.log)
+     */
     public report(message: string, endWithNewLine: boolean = true) {
         if (this.options.silent === false) {
             if (endWithNewLine) {
@@ -48,7 +78,13 @@ class SchemaPayloadGenerator {
         }
     }
 
-    public async loadSchema(schema: JSONSchema6 | string, parserOptions?: any) {
+    /**
+     * Load a master schema before generating values
+     * The schema will be parsed by json-schema-ref-parser
+     * @param schema Either a schema object (may contain $ref fields) or a relative path to one
+     * @param parserOptions json-schema-ref-parser options (will be passed to the parser)
+     */
+    public async loadSchema(schema: JSONSchema6 | string, parserOptions?: $RefParser.Options) {
         if (schema === undefined) throw new Error('Must pass a schema object / path');
 
         if (typeof schema === 'string') {
@@ -72,6 +108,10 @@ class SchemaPayloadGenerator {
         this.report(`Loaded schema with ${definitionCount} definitions${(hasDirectObject) ? ', and a direct object' : ''}`);
     }
 
+    /**
+     * Generate the payload for the loaded schema
+     * @param definitionKey In case the schema contains several definitions, which on to generate values for
+     */
     public async generatePayloads(definitionKey?: string): Promise<IFieldPossiblePayload[]> {
         if (this.schema === undefined) throw new Error(`Must load a schema before generating payloads`);
 
@@ -103,23 +143,31 @@ class SchemaPayloadGenerator {
         return processingResult;
     }
 
-    protected async generateFieldPayloads(processingData: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+    /**
+     * Generate values for a single field
+     * @param field
+     */
+    protected async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         let processingResult;
 
         for (const processor of this.fieldProcessors) {
-            processingResult = await processor.generateFieldPayloads(processingData);
+            processingResult = await processor.generateFieldPayloads(field);
             if (processingResult !== undefined) break;
         }
 
         return processingResult;
     }
 
-    protected initFieldProcessors() {
+    private initFieldProcessors() {
         const processFieldByType = new TypeFieldProcessor(this);
         const customFieldProcessor = new CustomFieldProcessor(this);
         this.fieldProcessors = [customFieldProcessor, processFieldByType];
     }
 
+    /**
+     * Parses the user-passed options (in any), adds defaults, initializes them, etc.
+     * @param userOptions
+     */
     private parseOptions(userOptions: ISchemaPayloadGeneratorOptions = {}): ISchemaPayloadGeneratorOptions {
         const defaults: ISchemaPayloadGeneratorOptions = {
             silent: true,
@@ -134,6 +182,10 @@ class SchemaPayloadGenerator {
         return layeredOptions;
     }
 
+    /**
+     * Transforms field keys into camelCase
+     * @param name
+     */
     private toCamelCase(name: string): string {
         return name.replace(/_([a-z])/g, match => match[1].toUpperCase());
     }

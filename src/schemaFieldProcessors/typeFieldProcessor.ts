@@ -1,5 +1,5 @@
 import {BaseFieldProcessor} from "./baseFieldProcessor";
-import {IFieldPossiblePayload, IFieldProcessingData} from "../schemaPayloadGenerator";
+import {IFieldPossiblePayload, IFieldProcessingData, SchemaPayloadGenerator} from "../schemaPayloadGenerator";
 import {JSONSchema6} from "json-schema";
 
 const jsf = require('json-schema-faker');
@@ -9,8 +9,18 @@ type TypeHandler = (field: IFieldProcessingData) => Promise<IFieldPossiblePayloa
 const bluebird = require('bluebird');
 const assignDeep = require('assign-deep');
 
-
+/**
+ * Generate values for fields according to the field type
+ */
 class TypeFieldProcessor extends BaseFieldProcessor {
+    constructor(generator: SchemaPayloadGenerator) {
+        super(generator);
+    }
+
+    /**
+     * Actually generate values for the given fields
+     * @param field The field to process
+     */
     public async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         let fieldType = field.schema.type;
         if (fieldType === undefined && field.schema.enum) fieldType = 'string';
@@ -24,12 +34,14 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return result;
     }
 
+    /** Generate values for a boolean field */
     protected async processSchemaField_boolean(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         const rawValues = [true, false];
 
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
+    /** Generate values for an integer field */
     protected async processSchemaField_integer(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         let minimum = field.schema.minimum || 1;
         let maximum = field.schema.maximum || 100;
@@ -42,10 +54,12 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
+    /** Generate values for a number field */
     protected async processSchemaField_number(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         return this.processSchemaField_integer(field);
     }
 
+    /** Generate values for an array field */
     protected async processSchemaField_array(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         const subField: IFieldProcessingData = {
             fieldTransformedKey: field.fieldTransformedKey,
@@ -81,6 +95,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return arrayVariations;
     }
 
+    /** Generate values for an object field */
     protected async processSchemaField_string(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         if (field.schema.enum) return this.processSchemaField_enum(field);
 
@@ -96,12 +111,14 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
+    /** Generate values for a field with an enum */
     protected async processSchemaField_enum(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         const rawValues = [].concat(field.schema.enum);
 
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
+    /** Generate values for an object field */
     protected async processSchemaField_object(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         if (field.schema.additionalItems && (field.schema.additionalItems as JSONSchema6).oneOf) {
             // todo: change this
@@ -140,6 +157,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
     }
 
 
+    /** Turn an object field's possibilities tree into actual payloads */
     protected flattenObjectPropertiesToPayloads(field: IFieldProcessingData, propertiesPossiblePayloads: {[key: string]: IFieldPossiblePayload[]}): IFieldPossiblePayload[] {
 
         const minialPayloads: IFieldPossiblePayload[] = (field.schema.required || []).reduce((existingPayloads: IFieldPossiblePayload[], requiredKey: string) => {
@@ -161,6 +179,8 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 });
             });
 
+
+            // TODO: Mark these as minimal payloads, and only create such payloads from child-properties minimal payloads as well
             return result;
         }, [{field, payload: {}, id: ''}]) || [];
 

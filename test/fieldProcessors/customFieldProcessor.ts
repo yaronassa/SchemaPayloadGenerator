@@ -40,6 +40,25 @@ describe('CustomFieldProcessor', () => {
            expect(result.length).to.equal(1);
            expect(result[0].payload).to.equal('worked');
        });
+
+       it('Supports multiple processors that can override one another', async () => {
+            const processors = [
+                async (field: IFieldProcessingData) => (field.schema.title === 'override') ? [true] : undefined,
+                async (field: IFieldProcessingData) => (field.schema.type === 'boolean') ? [false] : undefined
+            ];
+
+            const generator = new SchemaPayloadGenerator({customFieldProcessors: processors});
+            await generator.loadSchema({type: 'boolean'});
+            let result = await generator.generatePayloads();
+
+            expect(result[0].payload).to.equal(false);
+
+            await generator.loadSchema({type: 'boolean', title: 'override'});
+
+            result = await generator.generatePayloads();
+            expect(result[0].payload).to.equal(true);
+
+       });
     });
 });
 

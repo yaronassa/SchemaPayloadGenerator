@@ -76,4 +76,7 @@ typings/
 
 sandbox.ts
 tmp/
-lib/
+dist/
+
+.idea/
+schemaPayloadGenerator.iml
