@@ -79,29 +79,39 @@ class TypeFieldProcessor extends BaseFieldProcessor {
             fieldFullPath: field.fieldFullPath
         };
 
+        const combinationsLimiters = this.generator.options.combinations.arrays;
+
         const possibleSubFieldVariations = await this.generateFieldPayloads(subField);
 
         let arrayVariations: IFieldPossiblePayload[];
 
-        if (subField.schema.type === 'object') {
-            arrayVariations = possibleSubFieldVariations.map(value => {
-                return {parentPossiblePayload: value.parentPossiblePayload, payload: value.payload, field, id: this.generatePayloadID(field, 0)};
-            });
+        if (combinationsLimiters.combinationGenerator !== undefined) {
+            const rawValues = combinationsLimiters.combinationGenerator(field, possibleSubFieldVariations.map(item => item.payload));
+            arrayVariations = this.rawValuesToPossiblePayloads(rawValues, field);
         } else {
-            const pairwiseVariationRawValues = possibleSubFieldVariations.reduce((acc, value, index, arr) => {
-                for (let i = index + 1; i < arr.length; i++) {
-                    acc.push([value.payload, arr[i].payload]);
-                }
-                return acc;
-            }, []);
 
-            const allVariationsRawValues = []
-                .concat(possibleSubFieldVariations.map(value => [value.payload]))
-                .concat(pairwiseVariationRawValues);
+            if (subField.schema.type === 'object') {
+                arrayVariations = possibleSubFieldVariations.map(value => {
+                    return {parentPossiblePayload: value.parentPossiblePayload, payload: value.payload, field, id: this.generatePayloadID(field, 0)};
+                });
+            } else {
+                const pairwiseVariationRawValues = possibleSubFieldVariations.reduce((acc, value, index, arr) => {
+                    if (combinationsLimiters.maxCombinations && acc.length >= combinationsLimiters.maxCombinations) return acc;
+                    for (let i = index + 1; i < arr.length; i++) {
+                        acc.push([value.payload, arr[i].payload]);
+                    }
+                    return acc;
+                }, []);
 
-            arrayVariations = this.rawValuesToPossiblePayloads(allVariationsRawValues, field);
+                let allVariationsRawValues = []
+                    .concat(possibleSubFieldVariations.map(value => [value.payload]))
+                    .concat(pairwiseVariationRawValues);
+
+                if (combinationsLimiters.maxCombinations) allVariationsRawValues = allVariationsRawValues.slice(0, combinationsLimiters.maxCombinations);
+
+                arrayVariations = this.rawValuesToPossiblePayloads(allVariationsRawValues, field);
+            }
         }
-
         return arrayVariations;
     }
 

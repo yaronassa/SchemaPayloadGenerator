@@ -18,7 +18,16 @@ interface ISchemaPayloadGeneratorOptions {
     /** Functions to process schema fields in custom ways */
     customFieldProcessors?: CustomProcessorFunction | CustomProcessorFunction[],
     /** Functions to generate values for given types in custom ways */
-    customTypeProcessors?: {[type: string]: (fieldSchema: JSONSchema6) => Promise<any[]>}
+    customTypeProcessors?: {[type: string]: (fieldSchema: JSONSchema6) => Promise<any[]>},
+    /** Control and limit the way value combinations are generated */
+    combinations?: {
+        arrays?: {
+            /**  Simply limit the combination number */
+            maxCombinations?: number,
+            combinationGenerator?: (field: IFieldProcessingData, subFieldRawValues: any[]) => any[][]
+        },
+        objects?: {}
+    }
 }
 
 /**
@@ -175,7 +184,15 @@ class SchemaPayloadGenerator {
             silent: true,
             payloadKeyTransform: this.toCamelCase,
             customFieldProcessors: [],
-            customTypeProcessors: {}
+            customTypeProcessors: {},
+            combinations: {
+                arrays: {
+
+                },
+                objects: {
+
+                }
+            }
         };
 
         const layeredOptions = assignDeep({}, defaults, userOptions) as ISchemaPayloadGeneratorOptions;

@@ -130,7 +130,33 @@ All these are covered in the following section [Customising value generation](#c
 
 ### Value combination tweaks
 
+There are several field types that are responsible for combining values and generating massive amounts of these combinations. Specifically, array-type and object-type fields "explode" their inner-fields variations into multiple combinations. By tweaking these combination tweaks, you can significantly reduce the number of produce value variations.
 
+#### Arrays
+
+The default processing for an array field is to include each of its sub-field possible values, as well as every non-repeating-pair-combination between these values. So the schema field `{type: 'array', items: {type: 'boolean'}}` will produce these possible sub-field values: `[true, false]`. These will be exploded into the array possibilities of `[[true], [false], [true, false]]`. Every value is included once, then every value pair.
+
+This may not seem that bad, but imagine an array of an enum field with 8 possible values. The array possible values count will be 8 original values + 7 pairs for the 1st value + 6 for the 2nd + ... + 1 pair for the 7th = **total of 36 value combinations**.
+
+You can control and limit the way these variations are generated via the `combinations.arrays` field in the generator options.
+
+**maxCombinations**:
+
+Set `arrays.maxCombinations` to an integer to crudly truncate the array possible values. The remaining values may or may not include the original single-values, dependent on how much was trunced. 
+
+**combinationGenerator**:
+
+For even more control, set this option to your custom function, and generate the value combinations yourself. Returning an undefined result will fallback to the default behaviour:
+
+```javascript
+const customCombinationGenerator = (field: IFieldProcessingData, subFieldRawValues: any[]): any[][] => {
+   // Return your values here.
+   // Remember, it should be an array of arrays
+   // For examples
+   return subFieldRawValues.reverse().map(item => [item]);
+};
+```
+ 
 
 ### Custom type-specific generators
 

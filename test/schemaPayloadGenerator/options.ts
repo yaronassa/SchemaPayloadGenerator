@@ -1,4 +1,8 @@
-import {ISchemaPayloadGeneratorOptions, SchemaPayloadGenerator} from "../../src/schemaPayloadGenerator";
+import {
+    IFieldProcessingData,
+    ISchemaPayloadGeneratorOptions,
+    SchemaPayloadGenerator
+} from "../../src/schemaPayloadGenerator";
 import {expect} from 'chai';
 import {it, describe} from 'mocha';
 import {CustomFieldProcessor, CustomProcessorFunction} from "../../src/schemaFieldProcessors/customFieldProcessor";
@@ -71,6 +75,37 @@ describe('SchemaPayloadGenerator Options', () => {
             const generator = new SchemaPayloadGenerator({customTypeProcessors: {boolean: myFunction}});
             expect((generator.options.customTypeProcessors.boolean).call(this)).to.equal('worked');
         });
+    });
+
+    describe('Combinations options', () => {
+        it('Defaults to an arrays, objects empty object', async () => {
+            const generator = new SchemaPayloadGenerator();
+            expect(generator.options.combinations).to.deep.equal({arrays: {}, objects: {}});
+        });
+
+        describe('Limit array combinations', () => {
+            it('Can set a simple maximum limit on array combinations', async () => {
+                const generator = new SchemaPayloadGenerator({combinations: {arrays: {maxCombinations: 10}}});
+                await generator.loadSchema({type: 'array', items: {type: 'string', enum: [1, 2, 3, 4, 5, 6]}});
+                const result = await generator.generatePayloads();
+                expect(result.length).to.equal(10);
+                expect(result.map(item => item.payload.join(',')).join(';')).to.equal('1;2;3;4;5;6;1,2;1,3;1,4;1,5');
+            });
+
+            it('Can use a custom combination generation function', async () => {
+                const customCombinationGenerator = (field: IFieldProcessingData, subFieldRawValues: any[]): any[][] => {
+                    return subFieldRawValues.reverse().map(item => [item]);
+                };
+
+                const generator = new SchemaPayloadGenerator({combinations: {arrays: {combinationGenerator: customCombinationGenerator}}});
+                await generator.loadSchema({type: 'array', items: {type: 'string', enum: [1, 2, 3, 4, 5, 6]}});
+                const result = await generator.generatePayloads();
+                expect(result.length).to.equal(6);
+                expect(result.map(item => item.payload.join(',')).join(';')).to.equal('6;5;4;3;2;1');
+            });
+        });
+
+
     });
 
 });
