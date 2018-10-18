@@ -1,11 +1,8 @@
 import {CustomFieldProcessor} from "../../src/schemaFieldProcessors/customFieldProcessor";
-import {expect} from 'chai';
 import {it, describe} from 'mocha';
 import {IFieldPossiblePayload, IFieldProcessingData, SchemaPayloadGenerator} from "../../src/schemaPayloadGenerator";
-import {TypeFieldProcessor} from "../../src/schemaFieldProcessors/typeFieldProcessor";
 
-const path = require('path');
-const testDataPath = path.resolve('test', 'testData');
+const expect = require('chai').expect;
 
 class DemoFieldProcessor extends CustomFieldProcessor {
     public async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {

@@ -1,9 +1,9 @@
 import {SchemaPayloadGenerator} from "../../src/schemaPayloadGenerator";
-import {expect} from 'chai';
 import {it, describe} from 'mocha';
 
 const path = require('path');
 const testPathData = path.resolve('test', 'testData');
+const expect = require('chai').expect;
 
 const sinon = require('sinon');
 

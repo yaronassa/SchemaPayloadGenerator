@@ -1,16 +1,14 @@
 import {
     IFieldPossiblePayload,
     IFieldProcessingData,
-    ISchemaPayloadGeneratorOptions,
     SchemaPayloadGenerator
 } from "../../src/schemaPayloadGenerator";
-import {expect} from 'chai';
+
 import {it, describe} from 'mocha';
-import {CustomFieldProcessor, CustomProcessorFunction} from "../../src/schemaFieldProcessors/customFieldProcessor";
+import {CustomProcessorFunction} from "../../src/schemaFieldProcessors/customFieldProcessor";
 
 const sinon = require('sinon');
-const path = require('path');
-const testDataPath = path.resolve('test', 'testData');
+const expect = require('chai').expect;
 
 describe('SchemaPayloadGenerator Options', () => {
     beforeEach(() => {

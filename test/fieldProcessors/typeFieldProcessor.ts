@@ -1,10 +1,9 @@
 import {TypeFieldProcessor} from "../../src/schemaFieldProcessors/typeFieldProcessor";
-import {expect} from 'chai';
 import {it, describe} from 'mocha';
 import {IFieldPossiblePayload, IFieldProcessingData} from "../../src/schemaPayloadGenerator";
 import {JSONSchema6} from "json-schema";
 
-const path = require('path');
+import {expect} from 'chai';
 
 class DemoFieldProcessor extends TypeFieldProcessor {
     protected async processSchemaField_boolean(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {

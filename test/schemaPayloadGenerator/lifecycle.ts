@@ -1,6 +1,7 @@
 import {ISchemaPayloadGeneratorOptions, SchemaPayloadGenerator} from "../../src/schemaPayloadGenerator";
-import {expect} from 'chai';
 import {it, describe} from 'mocha';
+
+const expect = require('chai').expect;
 
 class SchemaPayloadGeneratorExtension extends SchemaPayloadGenerator {
     private readonly extension: string;

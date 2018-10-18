@@ -1,7 +1,8 @@
 import {BaseFieldProcessor} from "../../src/schemaFieldProcessors/baseFieldProcessor";
-import {expect} from 'chai';
 import {it, describe} from 'mocha';
 import {IFieldPossiblePayload, IFieldProcessingData} from "../../src/schemaPayloadGenerator";
+
+const expect = require('chai').expect;
 
 const path = require('path');
 const testDataPath = path.resolve('test', 'testData');
