@@ -196,6 +196,33 @@ describe('TypeFieldProcessor', () => {
                 // Inner object: 3 integer + undefined, 1 string + undefined = 4*2 = 8; Outer object: The inner + undefined = 9
                 expect(result.filter(item => item.payload.some !== undefined).some(item => item.payload.some.thing === 1)).to.equal(true);
             });
+
+            describe('oneOf modifier', () => {
+                it('Can handle oneOf modifier', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', oneOf: [
+                            {properties: {some: {type: 'boolean'}}},
+                            {properties: {thing: {type: 'boolean'}}}
+                            ]
+                    }});
+
+                    expect(result.some(item => item.payload.some !== undefined)).to.equal(true);
+                    expect(result.some(item => item.payload.thing !== undefined)).to.equal(true);
+                    expect(result.every(item => item.payload.some === undefined || item.payload.thing === undefined)).to.equal(true);
+                });
+
+                it('oneOf modifier respects the required field', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', oneOf: [
+                                {properties: {some: {type: 'boolean'}}, required: ['some']},
+                                {properties: {thing: {type: 'boolean'}}, required: ['thing']}
+                            ]
+                        }});
+
+                    expect(result.map(item => `${item.payload.some},${item.payload.thing}`).join(';'))
+                        .to.equal('true,undefined;false,undefined;undefined,true;undefined,false');
+                });
+            });
         });
 
     });

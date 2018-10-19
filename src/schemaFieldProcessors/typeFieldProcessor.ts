@@ -144,17 +144,24 @@ class TypeFieldProcessor extends BaseFieldProcessor {
 
     /** Generate values for an object field */
     protected async processSchemaField_object(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
-        if (field.schema.additionalItems && (field.schema.additionalItems as JSONSchema6).oneOf) {
-            // todo: change this
-            const subField: IFieldProcessingData = {
-                schema: (field.schema.additionalItems as JSONSchema6).oneOf[0] as JSONSchema6,
-                parent: field.parent,
-                fieldKeyInParent: field.fieldKeyInParent,
-                fieldTransformedKey: field.fieldTransformedKey,
-                fieldFullPath: field.fieldFullPath
-            };
+        if (field.schema.oneOf) {
 
-            return this.generateFieldPayloads(subField);
+            const oneOfPossiblePayloads = await bluebird.reduce(field.schema.oneOf as JSONSchema6[], async (acc: any[], oneOfOption: JSONSchema6) => {
+                const schemaDuplicate = assignDeep({}, field.schema, oneOfOption) as JSONSchema6;
+                delete schemaDuplicate.oneOf;
+                const oneOfField: IFieldProcessingData = {
+                    schema: schemaDuplicate,
+                    fieldKeyInParent: field.fieldKeyInParent,
+                    fieldTransformedKey: field.fieldTransformedKey,
+                    fieldFullPath: field.fieldFullPath
+                };
+
+                const possibilities = await this.processSchemaField_object(oneOfField);
+                possibilities.forEach(item => acc.push(item.payload));
+                return acc;
+           }, []);
+
+            return this.rawValuesToPossiblePayloads(oneOfPossiblePayloads, field);
         }
 
         const combinationsLimiters = this.generator.options.combinations.objects;
