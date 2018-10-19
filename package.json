@@ -30,7 +30,7 @@
     "lint": "./node_modules/.bin/tslint -p ./",
     "precommit": "./node_modules/.bin/ts-node devTools/processGitHooks.ts preCommit",
     "build": "tsc",
-    "docs": "typedoc --out docs --mode file --target ES6 src/",
+    "docs": "typedoc --out docs --mode file --target ES6 --gitRevision master src/",
     "docs:publish": "gh-pages -m \"[ci skip] Updates\" -d ./docs",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",

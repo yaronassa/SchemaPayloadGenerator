@@ -42,6 +42,7 @@ for (const possibility of possibilities) {
 
 Project code documentation is available at the [github page](https://yaronassa.github.io/SchemaPayloadGenerator/).
 
+The feature roadmap is available in the [roadmap github board](https://github.com/yaronassa/SchemaPayloadGenerator/projects/1).
 
 ## Out-Of-The-Box usage
 
