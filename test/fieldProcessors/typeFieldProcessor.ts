@@ -223,6 +223,38 @@ describe('TypeFieldProcessor', () => {
                         .to.equal('true,undefined;false,undefined;undefined,true;undefined,false');
                 });
             });
+
+            describe('allOf modifier', () => {
+                it('Can handle allOf modifier', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', allOf: [
+                                {properties: {some: {type: 'boolean'}}},
+                                {properties: {thing: {type: 'boolean'}}}
+                            ]
+                        }});
+
+                    const result2 = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', properties: {some: {type: 'boolean'}, thing: {type: 'boolean'}}}
+                    });
+
+                    expect(result2.map(item => item.payload)).to.deep.equal(result.map(item => item.payload));
+                });
+
+                it('allOf modifier respects the required field', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', allOf: [
+                                {properties: {some: {type: 'boolean'}}, required: ['some']},
+                                {properties: {thing: {type: 'boolean'}}, required: ['thing']}
+                            ]
+                        }});
+
+                    const result2 = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', properties: {some: {type: 'boolean'}, thing: {type: 'boolean'}}, required: ['some', 'thing']}
+                    });
+
+                    expect(result2.map(item => item.payload)).to.deep.equal(result.map(item => item.payload));
+                });
+            });
         });
 
     });

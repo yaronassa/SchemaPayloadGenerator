@@ -142,27 +142,49 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return this.rawValuesToPossiblePayloads(rawValues, field);
     }
 
+    protected async processSchemaField_object_oneOf(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        const oneOfPossiblePayloads = await bluebird.reduce(field.schema.oneOf as JSONSchema6[], async (acc: any[], oneOfOption: JSONSchema6) => {
+            const schemaDuplicate = assignDeep({}, field.schema, oneOfOption) as JSONSchema6;
+            delete schemaDuplicate.oneOf;
+            const oneOfField: IFieldProcessingData = {
+                schema: schemaDuplicate,
+                fieldKeyInParent: field.fieldKeyInParent,
+                fieldTransformedKey: field.fieldTransformedKey,
+                fieldFullPath: field.fieldFullPath
+            };
+
+            const possibilities = await this.generateFieldPayloads(oneOfField);
+            possibilities.forEach(item => acc.push(item.payload));
+            return acc;
+        }, []);
+
+        return this.rawValuesToPossiblePayloads(oneOfPossiblePayloads, field);
+    }
+
+    protected async processSchemaField_object_allOf(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        const allOfSchemas = field.schema.allOf.reduce((acc, subSchema) => assignDeep({}, acc, subSchema));
+        const combinedFieldSchema = assignDeep({}, field.schema, allOfSchemas) as JSONSchema6;
+        delete combinedFieldSchema.allOf;
+        combinedFieldSchema.required = field.schema.allOf.reduce((acc, subSchema: JSONSchema6) => {
+            (subSchema.required || []).forEach(item => {
+                if (acc.indexOf(item) < 0) acc.push(item);
+            });
+            return acc;
+        }, []);
+        const allOfField: IFieldProcessingData = {
+            schema: combinedFieldSchema,
+            fieldKeyInParent: field.fieldKeyInParent,
+            fieldTransformedKey: field.fieldTransformedKey,
+            fieldFullPath: field.fieldFullPath
+        };
+
+        return this.generateFieldPayloads(allOfField);
+    }
+
     /** Generate values for an object field */
     protected async processSchemaField_object(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
-        if (field.schema.oneOf) {
-
-            const oneOfPossiblePayloads = await bluebird.reduce(field.schema.oneOf as JSONSchema6[], async (acc: any[], oneOfOption: JSONSchema6) => {
-                const schemaDuplicate = assignDeep({}, field.schema, oneOfOption) as JSONSchema6;
-                delete schemaDuplicate.oneOf;
-                const oneOfField: IFieldProcessingData = {
-                    schema: schemaDuplicate,
-                    fieldKeyInParent: field.fieldKeyInParent,
-                    fieldTransformedKey: field.fieldTransformedKey,
-                    fieldFullPath: field.fieldFullPath
-                };
-
-                const possibilities = await this.processSchemaField_object(oneOfField);
-                possibilities.forEach(item => acc.push(item.payload));
-                return acc;
-           }, []);
-
-            return this.rawValuesToPossiblePayloads(oneOfPossiblePayloads, field);
-        }
+        if (field.schema.oneOf) return this.processSchemaField_object_oneOf(field);
+        if (field.schema.allOf) return this.processSchemaField_object_allOf(field);
 
         const combinationsLimiters = this.generator.options.combinations.objects;
 
