@@ -181,10 +181,56 @@ class TypeFieldProcessor extends BaseFieldProcessor {
         return this.generateFieldPayloads(allOfField);
     }
 
+    protected async processSchemaField_object_anyOf(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+        const anyOfPossiblePayloads = await bluebird.map(field.schema.anyOf as JSONSchema6[], async (anyOfOption: JSONSchema6) => {
+            const schemaDuplicate = assignDeep({}, field.schema, anyOfOption) as JSONSchema6;
+            delete schemaDuplicate.anyOf;
+            const oneOfField: IFieldProcessingData = {
+                schema: schemaDuplicate,
+                fieldKeyInParent: field.fieldKeyInParent,
+                fieldTransformedKey: field.fieldTransformedKey,
+                fieldFullPath: field.fieldFullPath
+            };
+
+            const possibilities = await this.generateFieldPayloads(oneOfField);
+            return possibilities.map(item => item.payload);
+        });
+
+        // tslint:disable-next-line:max-line-length
+        const allPossibilitiesMatrix = anyOfPossiblePayloads.reduce((acc: IFieldPossiblePayload[], subSchemaPossibilities: IFieldPossiblePayload[], index: number, arr: IFieldPossiblePayload[][]) => {
+            const nextSubSchemas = arr.slice(index + 1);
+
+            subSchemaPossibilities.forEach(subSchemaPossibility => {
+                if (Object.keys(subSchemaPossibility).length === 0) return;
+                const subSchemasNewPossibilities: IFieldPossiblePayload[] = [subSchemaPossibility];
+                nextSubSchemas.forEach(nextSubSchemaPayloads => {
+                    const subSchemaNewPossibilities: IFieldPossiblePayload[] = [];
+                    nextSubSchemaPayloads.forEach(nextSubSchemaPayload => {
+                        if (Object.keys(nextSubSchemaPayload).length === 0) return;
+                        subSchemasNewPossibilities.forEach(newPossibility => {
+                            subSchemaNewPossibilities.push(assignDeep({}, newPossibility, nextSubSchemaPayload));
+                        });
+                    });
+
+                    subSchemaNewPossibilities.forEach(addedPayload => subSchemasNewPossibilities.push(addedPayload));
+                });
+
+                subSchemasNewPossibilities.forEach(addedToReducer => acc.push(addedToReducer));
+
+            });
+
+            return acc;
+
+        }, [{}]);
+
+        return this.rawValuesToPossiblePayloads(allPossibilitiesMatrix, field);
+    }
+
     /** Generate values for an object field */
     protected async processSchemaField_object(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         if (field.schema.oneOf) return this.processSchemaField_object_oneOf(field);
         if (field.schema.allOf) return this.processSchemaField_object_allOf(field);
+        if (field.schema.anyOf) return this.processSchemaField_object_anyOf(field);
 
         const combinationsLimiters = this.generator.options.combinations.objects;
 

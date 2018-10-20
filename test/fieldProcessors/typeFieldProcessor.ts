@@ -255,6 +255,39 @@ describe('TypeFieldProcessor', () => {
                     expect(result2.map(item => item.payload)).to.deep.equal(result.map(item => item.payload));
                 });
             });
+
+            describe('anyOf modifier', () => {
+                it('Can handle anyOf modifier', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', anyOf: [
+                                {properties: {some: {type: 'boolean'}}},
+                                {properties: {thing: {type: 'boolean'}}}
+                            ]
+                        }});
+
+                    const result2 = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', properties: {some: {type: 'boolean'}, thing: {type: 'boolean'}}}
+                    });
+
+                    expect(result.map(item => item.payload)).to.deep.equalInAnyOrder(result2.map(item => item.payload));
+                });
+
+                it('Correctly handle required modifier', async () => {
+                    const result = await typeFieldProcessor.generateFieldPayloads({
+                        schema: {type: 'object', anyOf: [
+                                {properties: {some: {type: 'boolean'}, another: {type: 'string', enum: '1'}}, required: ['another']},
+                                {properties: {thing: {type: 'boolean'}}}
+                            ]
+                        }});
+
+                    expect(result.length).to.equal(12);
+                    expect(result.every(item => {
+                        if (item.payload.some !== undefined && item.payload.another === undefined) return false;
+                        return true;
+                    })).to.equal(true);
+                    expect(result.some(item => item.payload.thing !== undefined && item.payload.another === undefined)).to.equal(true);
+                });
+            });
         });
 
     });
