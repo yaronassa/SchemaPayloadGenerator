@@ -1,3 +1,9 @@
+### 0.3 (21/10/2018)
+
+#### Bug fixes
+
+- Fix custom processors bug [#4](https://github.com/yaronassa/SchemaPayloadGenerator/issues/4)
+
 ### 0.2 (20/10/2018)
 
 #### New features
