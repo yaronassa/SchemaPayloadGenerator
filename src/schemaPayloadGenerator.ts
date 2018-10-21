@@ -168,7 +168,7 @@ class SchemaPayloadGenerator {
      * Generate values for a single field
      * @param field
      */
-    protected async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
+    public async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
         let processingResult;
 
         for (const processor of this.fieldProcessors) {

@@ -128,10 +128,13 @@ describe('TypeFieldProcessor', () => {
     });
     describe('Complex value generation', () => {
 
+        const generatorStub = { report: () => {}, generateFieldPayloads: {}, options: {
+                payloadKeyTransform: source => source.toLowerCase(), customTypeProcessors: {}, combinations: {arrays: {}, objects: {}}}
+        };
+
         // @ts-ignore
-        const typeFieldProcessor = new TypeFieldProcessor({ report: () => {}, options: {
-            payloadKeyTransform: source => source.toLowerCase(), customTypeProcessors: {}, combinations: {arrays: {}, objects: {}}}
-        });
+        const typeFieldProcessor = new TypeFieldProcessor(generatorStub);
+        generatorStub.generateFieldPayloads = typeFieldProcessor.generateFieldPayloads.bind(typeFieldProcessor);
 
         describe('Array values', () => {
             it('Generates arrays according to sub-type', async () => {

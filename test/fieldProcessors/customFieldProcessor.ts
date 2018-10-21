@@ -66,6 +66,17 @@ describe('CustomFieldProcessor', () => {
             expect(result.length).to.equal(1);
             expect(result[0].payload).to.equal('worked');
         });
+
+        it('Works for nested values', async () => {
+            // @ts-ignore
+            const generator = new SchemaPayloadGenerator({customFieldProcessors: async (field: IFieldProcessingData) => {
+                    if (field.schema.type === 'boolean') return 'worked';
+                }});
+            await generator.loadSchema({type: 'object', properties: {some: {type: 'boolean'}}, required: ['some']});
+            const result = await generator.generatePayloads();
+
+            expect(result[0].payload.some).to.equal('worked');
+        });
     });
 });
 

@@ -81,7 +81,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
 
         const combinationsLimiters = this.generator.options.combinations.arrays;
 
-        const possibleSubFieldVariations = await this.generateFieldPayloads(subField);
+        const possibleSubFieldVariations = await this.generator.generateFieldPayloads(subField);
 
         let arrayVariations: IFieldPossiblePayload[];
         let rawValues;
@@ -153,7 +153,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 fieldFullPath: field.fieldFullPath
             };
 
-            const possibilities = await this.generateFieldPayloads(oneOfField);
+            const possibilities = await this.generator.generateFieldPayloads(oneOfField);
             possibilities.forEach(item => acc.push(item.payload));
             return acc;
         }, []);
@@ -178,7 +178,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
             fieldFullPath: field.fieldFullPath
         };
 
-        return this.generateFieldPayloads(allOfField);
+        return this.generator.generateFieldPayloads(allOfField);
     }
 
     protected async processSchemaField_object_anyOf(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
@@ -192,7 +192,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 fieldFullPath: field.fieldFullPath
             };
 
-            const possibilities = await this.generateFieldPayloads(oneOfField);
+            const possibilities = await this.generator.generateFieldPayloads(oneOfField);
             return possibilities.map(item => item.payload);
         });
 
@@ -244,7 +244,7 @@ class TypeFieldProcessor extends BaseFieldProcessor {
                 fieldFullPath: field.fieldFullPath + '/' + propertyKey
             };
 
-            let propertyVariations = await this.generateFieldPayloads(propertyField);
+            let propertyVariations = await this.generator.generateFieldPayloads(propertyField);
             if (combinationsLimiters.maxPropertiesCombinations !== undefined) {
                 propertyVariations = propertyVariations.slice(0, combinationsLimiters.maxPropertiesCombinations);
             }
