@@ -71,6 +71,16 @@ await generator.loadSchema('./pathToFile.json', {dereference: {circular: false}}
 
 The parser will resolve all local / remote references, $ref values, etc, so you don't need to prepare / change your schemas.
 
+### Predicting value count
+
+For large and complex schemas, the value generation process maybe extremely lengthy, and you might want to get a general sense of the expected payload count, before actually generating them.
+
+the `.calculatePayloadCount` method will do just that. It will attempt to short-circut many of the length generation process, where applicable, and quickly produce the expected payload count.
+
+All of the value generation customizations will be used, so you'll get an acurate prediction. This means, however, that if your customizations involve [producing your own values](##custom-type-specific-generators) for object / array type fields, or limiting their value generations through [custom functions](###value-combination-tweaks), `calculatePayloadCount` won't be much quicker than the actual value generation.
+
+This is because much of the "short-circuts" `calculatePayloadCount` uses regard the generic object and array value generations. If they are customized, the actual value generation will be run to determine the expected payload count.
+
 ### Generating values
 
 **Please note** Like the schema loading operations, the [`.generatePayloads`](https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#generatepayloads) command is asynchronous and returns a `Promise`. 

@@ -1,6 +1,7 @@
 import {JSONSchema6} from "json-schema";
 import {BaseFieldProcessor} from "./schemaFieldProcessors/baseFieldProcessor";
 import {TypeFieldProcessor} from "./schemaFieldProcessors/typeFieldProcessor";
+import {CountFieldProcessor} from "./schemaFieldProcessors/countFieldProcessor";
 import {CustomFieldProcessor, CustomProcessorFunction} from "./schemaFieldProcessors/customFieldProcessor";
 import $RefParser from "json-schema-ref-parser";
 
@@ -77,7 +78,7 @@ class SchemaPayloadGenerator {
     /** The master schema to work from */
     public schema: JSONSchema6;
     /** Processing classes for the schema fields */
-    protected fieldProcessors: BaseFieldProcessor[];
+    protected fieldProcessors: {typeFieldProcessor: TypeFieldProcessor, customFieldProcessor: CustomFieldProcessor, countFieldProcessor: CountFieldProcessor};
 
     constructor(options?: ISchemaPayloadGeneratorOptions) {
         this.options = this.parseOptions(options);
@@ -130,30 +131,39 @@ class SchemaPayloadGenerator {
     }
 
     /**
+     * Generates the payload count without actually generating them (if possible)
+     * @param definitionKey In case the schema contains several definitions, which on to generate values for
+     */
+    public async calculatePayloadCount(definitionKey?: string): Promise<number> {
+        const {masterField, keyReportName} = this.extractMasterField(definitionKey);
+
+        this.report(`Calculating payload count for ${keyReportName}`);
+
+        const processingResult = await this.calculateFieldPayloadCount({
+            schema: masterField,
+            fieldKeyInParent: definitionKey || '',
+            fieldTransformedKey: this.options.payloadKeyTransform(definitionKey || ''),
+            fieldFullPath: definitionKey || '/'
+        });
+
+        this.report(`Would have generated ${processingResult} payloads`);
+
+        return processingResult;
+    }
+
+    /**
      * Generate the payload for the loaded schema
      * @param definitionKey In case the schema contains several definitions, which on to generate values for
      */
     public async generatePayloads(definitionKey?: string): Promise<IFieldPossiblePayload[]> {
         if (this.schema === undefined) throw new Error(`Must load a schema before generating payloads`);
 
-        let masterDefinition: JSONSchema6;
-
-        if (definitionKey === undefined) {
-            if (JSON.stringify(Object.keys(this.schema)) === '["definitions"]') throw new Error('Must specify a definition for a definition-only schema');
-            masterDefinition = this.schema;
-        } else {
-            masterDefinition = this.schema.definitions[definitionKey] as JSONSchema6;
-            if (masterDefinition === undefined) throw new Error(`Cannot find definition with key = ${definitionKey}`);
-        }
-
-        if (masterDefinition.type === undefined) throw new Error(`Schema root doesn't have the mandatory "type" property`);
-
-        const keyReportName = definitionKey || masterDefinition.$id || masterDefinition.title || 'main object';
+        const {masterField, keyReportName} = this.extractMasterField(definitionKey);
 
         this.report(`Generating payloads for ${keyReportName}`);
 
         const processingResult = await this.generateFieldPayloads({
-            schema: masterDefinition,
+            schema: masterField,
             fieldKeyInParent: definitionKey || '',
             fieldTransformedKey: this.options.payloadKeyTransform(definitionKey || ''),
             fieldFullPath: definitionKey || '/'
@@ -165,24 +175,64 @@ class SchemaPayloadGenerator {
     }
 
     /**
+     * Generate the payload count for a single field without actually generating its values (if possible)
+     * @param field
+     */
+    public async calculateFieldPayloadCount(field: IFieldProcessingData): Promise<number> {
+
+        let payloadCount;
+        const customProcessingResult = await this.fieldProcessors.customFieldProcessor.generateFieldPayloads(field);
+
+        if (customProcessingResult === undefined) {
+            payloadCount = await this.fieldProcessors.countFieldProcessor.calculateFieldPayloadCount(field);
+        } else {
+            payloadCount = customProcessingResult.length;
+        }
+
+        return payloadCount;
+    }
+
+    /**
      * Generate values for a single field
      * @param field
      */
     public async generateFieldPayloads(field: IFieldProcessingData): Promise<IFieldPossiblePayload[]> {
-        let processingResult;
+        let processingResult = await this.fieldProcessors.customFieldProcessor.generateFieldPayloads(field);
 
-        for (const processor of this.fieldProcessors) {
-            processingResult = await processor.generateFieldPayloads(field);
-            if (processingResult !== undefined) break;
-        }
+        if (processingResult === undefined) processingResult = await this.fieldProcessors.typeFieldProcessor.generateFieldPayloads(field);
 
         return processingResult;
     }
 
+    /**
+     * Extracts the master schema field to process
+     * @param definitionKey In case the schema contains several definitions, which on to generate values for
+     */
+    private extractMasterField(definitionKey?: string): {masterField: JSONSchema6, keyReportName: string} {
+        if (this.schema === undefined) throw new Error(`Must load a schema before generating payloads`);
+
+        let masterField: JSONSchema6;
+
+        if (definitionKey === undefined) {
+            if (JSON.stringify(Object.keys(this.schema)) === '["definitions"]') throw new Error('Must specify a definition for a definition-only schema');
+            masterField = this.schema;
+        } else {
+            masterField = this.schema.definitions[definitionKey] as JSONSchema6;
+            if (masterField === undefined) throw new Error(`Cannot find definition with key = ${definitionKey}`);
+        }
+
+        if (masterField.type === undefined) throw new Error(`Schema root doesn't have the mandatory "type" property`);
+
+        const keyReportName = definitionKey || masterField.$id || masterField.title || 'main object';
+
+        return {masterField, keyReportName};
+    }
+
     private initFieldProcessors() {
-        const processFieldByType = new TypeFieldProcessor(this);
+        const typeFieldProcessor = new TypeFieldProcessor(this);
         const customFieldProcessor = new CustomFieldProcessor(this);
-        this.fieldProcessors = [customFieldProcessor, processFieldByType];
+        const countFieldProcessor = new CountFieldProcessor(this);
+        this.fieldProcessors = {typeFieldProcessor, customFieldProcessor, countFieldProcessor};
     }
 
     /**
