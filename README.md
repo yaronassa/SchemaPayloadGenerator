@@ -79,7 +79,7 @@ For large and complex schemas, the value generation process maybe extremely leng
 
 the `.calculatePayloadCount` method will do just that. It will attempt to short-circut many of the length generation process, where applicable, and quickly produce the expected payload count.
 
-All of the value generation customizations will be used, so you'll get an acurate prediction. This means, however, that if your customizations involve [producing your own values](##custom-type-specific-generators) for object / array type fields, or limiting their value generations through [custom functions](###value-combination-tweaks), `calculatePayloadCount` won't be much quicker than the actual value generation.
+All of the value generation customizations will be used, so you'll get an acurate prediction. This means, however, that if your customizations involve [producing your own values](#custom-type-specific-generators) for object / array type fields, or limiting their value generations through [custom functions](#value-combination-tweaks), `calculatePayloadCount` won't be much quicker than the actual value generation.
 
 This is because much of the "short-circuts" `calculatePayloadCount` uses regard the generic object and array value generations. If they are customized, the actual value generation will be run to determine the expected payload count.
 
