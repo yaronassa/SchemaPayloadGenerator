@@ -100,6 +100,11 @@
 				<p>The schema will be parsed by <a href="https://www.npmjs.com/package/json-schema-ref-parser">JSON Schema $Ref Parser</a>, and can receive an <a href="https://github.com/APIDevTools/json-schema-ref-parser/blob/master/docs/options.md">options object</a> that will be passed directly to the parser.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">await</span> generator.loadSchema(<span class="hljs-string">'./pathToFile.json'</span>, {<span class="hljs-attr">dereference</span>: {<span class="hljs-attr">circular</span>: <span class="hljs-literal">false</span>}});</code></pre>
 				<p>The parser will resolve all local / remote references, $ref values, etc, so you don&#39;t need to prepare / change your schemas.</p>
+				<h3 id="predicting-value-count">Predicting value count</h3>
+				<p>For large and complex schemas, the value generation process maybe extremely lengthy, and you might want to get a general sense of the expected payload count, before actually generating them.</p>
+				<p>the <code>.calculatePayloadCount</code> method will do just that. It will attempt to short-circut many of the length generation process, where applicable, and quickly produce the expected payload count.</p>
+				<p>All of the value generation customizations will be used, so you&#39;ll get an acurate prediction. This means, however, that if your customizations involve <a href="##custom-type-specific-generators">producing your own values</a> for object / array type fields, or limiting their value generations through <a href="###value-combination-tweaks">custom functions</a>, <code>calculatePayloadCount</code> won&#39;t be much quicker than the actual value generation.</p>
+				<p>This is because much of the &quot;short-circuts&quot; <code>calculatePayloadCount</code> uses regard the generic object and array value generations. If they are customized, the actual value generation will be run to determine the expected payload count.</p>
 				<h3 id="generating-values">Generating values</h3>
 				<p><strong>Please note</strong> Like the schema loading operations, the <a href="https://yaronassa.github.io/SchemaPayloadGenerator/classes/schemapayloadgenerator.html#generatepayloads"><code>.generatePayloads</code></a> command is asynchronous and returns a <code>Promise</code>. </p>
 				<p>Once a schema is loaded, generating values is straightforward:</p>
@@ -294,6 +299,9 @@ payloads = <span class="hljs-keyword">await</span> generator.generatePayloads();
 						<a href="classes/basefieldprocessor.html" class="tsd-kind-icon">Base<wbr>Field<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/countfieldprocessor.html" class="tsd-kind-icon">Count<wbr>Field<wbr>Processor</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="classes/customfieldprocessor.html" class="tsd-kind-icon">Custom<wbr>Field<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-not-exported">
@@ -310,6 +318,9 @@ payloads = <span class="hljs-keyword">await</span> generator.generatePayloads();
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="interfaces/ischemapayloadgeneratoroptions.html" class="tsd-kind-icon">ISchema<wbr>Payload<wbr>Generator<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#counthandler" class="tsd-kind-icon">Count<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-is-not-exported">
 						<a href="globals.html#customprocessorfunction" class="tsd-kind-icon">Custom<wbr>Processor<wbr>Function</a>

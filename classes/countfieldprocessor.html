@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TypeFieldProcessor | schema-payload-generator</title>
+	<title>CountFieldProcessor | schema-payload-generator</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,36 +56,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="typefieldprocessor.html">TypeFieldProcessor</a>
+					<a href="countfieldprocessor.html">CountFieldProcessor</a>
 				</li>
 			</ul>
-			<h1>Class TypeFieldProcessor</h1>
+			<h1>Class CountFieldProcessor</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Generate values for fields according to the field type</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="basefieldprocessor.html" class="tsd-signature-type">BaseFieldProcessor</a>
+						<a href="typefieldprocessor.html" class="tsd-signature-type">TypeFieldProcessor</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">TypeFieldProcessor</span>
-								<ul class="tsd-hierarchy">
-									<li>
-										<a href="countfieldprocessor.html" class="tsd-signature-type">CountFieldProcessor</a>
-									</li>
-								</ul>
+								<span class="target">CountFieldProcessor</span>
 							</li>
 						</ul>
 					</li>
@@ -95,52 +83,65 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-not-exported">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported"><a href="typefieldprocessor.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="countfieldprocessor.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#generator" class="tsd-kind-icon">generator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#generator" class="tsd-kind-icon">generator</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#executecustomtypeprocessor" class="tsd-kind-icon">execute<wbr>Custom<wbr>Type<wbr>Processor</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#flattenobjectpropertiestopayloads" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayloads</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported"><a href="typefieldprocessor.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#generatepayloadid" class="tsd-kind-icon">generate<wbr>PayloadID</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_array" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>array</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_boolean" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>boolean</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_enum" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>enum</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_integer" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>integer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_number" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>number</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_object" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_object_allof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_object_anyof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_object_oneof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#processschemafield_string" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>string</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="typefieldprocessor.html#rawvaluestopossiblepayloads" class="tsd-kind-icon">raw<wbr>Values<wbr>ToPossible<wbr>Payloads</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="countfieldprocessor.html#calculatefieldpayloadcount" class="tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_array" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_boolean" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>boolean</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_enum" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>enum</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_integer" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>integer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_number" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>number</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_object" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_object_allof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>all<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_object_anyof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>any<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_object_oneof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>one<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#calculateschemafieldcount_string" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>string</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#executecustomtypeprocessor" class="tsd-kind-icon">execute<wbr>Custom<wbr>Type<wbr>Processor</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#flattenobjectpropertiestopayloadcount" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayload<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#flattenobjectpropertiestopayloads" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayloads</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="countfieldprocessor.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#generatepayloadid" class="tsd-kind-icon">generate<wbr>PayloadID</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_array" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>array</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_boolean" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>boolean</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_enum" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>enum</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_integer" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>integer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_number" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>number</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_object" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_object_allof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_object_anyof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_object_oneof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#processschemafield_string" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>string</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="countfieldprocessor.html#rawvaluestopossiblepayloads" class="tsd-kind-icon">raw<wbr>Values<wbr>ToPossible<wbr>Payloads</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-not-exported">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Type<wbr>Field<wbr>Processor<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><a href="schemapayloadgenerator.html" class="tsd-signature-type">SchemaPayloadGenerator</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="typefieldprocessor.html" class="tsd-signature-type">TypeFieldProcessor</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Count<wbr>Field<wbr>Processor<span class="tsd-signature-symbol">(</span>generator<span class="tsd-signature-symbol">: </span><a href="schemapayloadgenerator.html" class="tsd-signature-type">SchemaPayloadGenerator</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="countfieldprocessor.html" class="tsd-signature-type">CountFieldProcessor</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#constructor">constructor</a></p>
 								<p>Overrides <a href="basefieldprocessor.html">BaseFieldProcessor</a>.<a href="basefieldprocessor.html#constructor">constructor</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L15">schemaFieldProcessors/typeFieldProcessor.ts:15</a></li>
@@ -152,7 +153,7 @@
 									<h5>generator: <a href="schemapayloadgenerator.html" class="tsd-signature-type">SchemaPayloadGenerator</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="typefieldprocessor.html" class="tsd-signature-type">TypeFieldProcessor</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="countfieldprocessor.html" class="tsd-signature-type">CountFieldProcessor</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -173,15 +174,269 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<a name="calculatefieldpayloadcount" class="tsd-anchor"></a>
+					<h3>calculate<wbr>Field<wbr>Payload<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L13">schemaFieldProcessors/countFieldProcessor.ts:13</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_array" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>array</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>array<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L56">schemaFieldProcessors/countFieldProcessor.ts:56</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_boolean" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>boolean</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>boolean<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L32">schemaFieldProcessors/countFieldProcessor.ts:32</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_enum" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>enum</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>enum<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L50">schemaFieldProcessors/countFieldProcessor.ts:50</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_integer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>integer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>integer<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L36">schemaFieldProcessors/countFieldProcessor.ts:36</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_number" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>number</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>number<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L40">schemaFieldProcessors/countFieldProcessor.ts:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_object" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L153">schemaFieldProcessors/countFieldProcessor.ts:153</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_object_allof" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>all<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>all<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L105">schemaFieldProcessors/countFieldProcessor.ts:105</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_object_anyof" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>any<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>any<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L125">schemaFieldProcessors/countFieldProcessor.ts:125</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_object_oneof" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>one<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>one<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L86">schemaFieldProcessors/countFieldProcessor.ts:86</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="calculateschemafieldcount_string" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>string</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>string<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L44">schemaFieldProcessors/countFieldProcessor.ts:44</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="executecustomtypeprocessor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> execute<wbr>Custom<wbr>Type<wbr>Processor</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">execute<wbr>Custom<wbr>Type<wbr>Processor<span class="tsd-signature-symbol">(</span>processor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#executecustomtypeprocessor">executeCustomTypeProcessor</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L40">schemaFieldProcessors/typeFieldProcessor.ts:40</a></li>
 								</ul>
@@ -218,14 +473,51 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<a name="flattenobjectpropertiestopayloadcount" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> flatten<wbr>Object<wbr>Properties<wbr>ToPayload<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayload<wbr>Count<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a>, propertiesPossiblePayloadCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/countFieldProcessor.ts#L191">schemaFieldProcessors/countFieldProcessor.ts:191</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Turn an object field&#39;s possibilities tree into actual payloads</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+								</li>
+								<li>
+									<h5>propertiesPossiblePayloadCount: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="flattenobjectpropertiestopayloads" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> flatten<wbr>Object<wbr>Properties<wbr>ToPayloads</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayloads<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a>, propertiesPossiblePayloads<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#flattenobjectpropertiestopayloads">flattenObjectPropertiesToPayloads</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L265">schemaFieldProcessors/typeFieldProcessor.ts:265</a></li>
 								</ul>
@@ -253,15 +545,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 					<a name="generatefieldpayloads" class="tsd-anchor"></a>
 					<h3>generate<wbr>Field<wbr>Payloads</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">generate<wbr>Field<wbr>Payloads<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#generatefieldpayloads">generateFieldPayloads</a></p>
 								<p>Overrides <a href="basefieldprocessor.html">BaseFieldProcessor</a>.<a href="basefieldprocessor.html#generatefieldpayloads">generateFieldPayloads</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L24">schemaFieldProcessors/typeFieldProcessor.ts:24</a></li>
@@ -323,15 +616,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_array" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>array</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>array<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_array">processSchemaField_array</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L73">schemaFieldProcessors/typeFieldProcessor.ts:73</a></li>
 								</ul>
@@ -351,15 +645,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_boolean" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>boolean</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>boolean<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_boolean">processSchemaField_boolean</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L48">schemaFieldProcessors/typeFieldProcessor.ts:48</a></li>
 								</ul>
@@ -379,15 +674,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_enum" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>enum</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>enum<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_enum">processSchemaField_enum</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L139">schemaFieldProcessors/typeFieldProcessor.ts:139</a></li>
 								</ul>
@@ -407,15 +703,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_integer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>integer</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>integer<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_integer">processSchemaField_integer</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L55">schemaFieldProcessors/typeFieldProcessor.ts:55</a></li>
 								</ul>
@@ -435,15 +732,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_number" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>number</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>number<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_number">processSchemaField_number</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L68">schemaFieldProcessors/typeFieldProcessor.ts:68</a></li>
 								</ul>
@@ -463,15 +761,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_object" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>object</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_object">processSchemaField_object</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L230">schemaFieldProcessors/typeFieldProcessor.ts:230</a></li>
 								</ul>
@@ -491,15 +790,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_object_allof" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_object_allof">processSchemaField_object_allOf</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L164">schemaFieldProcessors/typeFieldProcessor.ts:164</a></li>
 								</ul>
@@ -514,15 +814,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_object_anyof" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_object_anyof">processSchemaField_object_anyOf</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L184">schemaFieldProcessors/typeFieldProcessor.ts:184</a></li>
 								</ul>
@@ -537,15 +838,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_object_oneof" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_object_oneof">processSchemaField_object_oneOf</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L145">schemaFieldProcessors/typeFieldProcessor.ts:145</a></li>
 								</ul>
@@ -560,15 +862,16 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 					<a name="processschemafield_string" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Schema<wbr>Field_<wbr>string</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>string<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="typefieldprocessor.html">TypeFieldProcessor</a>.<a href="typefieldprocessor.html#processschemafield_string">processSchemaField_string</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaFieldProcessors/typeFieldProcessor.ts#L123">schemaFieldProcessors/typeFieldProcessor.ts:123</a></li>
 								</ul>
@@ -641,75 +944,111 @@
 					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="basefieldprocessor.html" class="tsd-kind-icon">Base<wbr>Field<wbr>Processor</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-not-exported">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-is-not-exported">
 						<a href="countfieldprocessor.html" class="tsd-kind-icon">Count<wbr>Field<wbr>Processor</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
+								<a href="countfieldprocessor.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#generator" class="tsd-kind-icon">generator</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculatefieldpayloadcount" class="tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_array" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>array</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_boolean" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>boolean</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_enum" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>enum</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_integer" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>integer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_number" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>number</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_object" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_object_allof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>all<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_object_anyof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>any<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_object_oneof" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>object_<wbr>one<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#calculateschemafieldcount_string" class="tsd-kind-icon">calculate<wbr>Schema<wbr>Field<wbr>Count_<wbr>string</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#executecustomtypeprocessor" class="tsd-kind-icon">execute<wbr>Custom<wbr>Type<wbr>Processor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#flattenobjectpropertiestopayloadcount" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayload<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#flattenobjectpropertiestopayloads" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayloads</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
+								<a href="countfieldprocessor.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#generatepayloadid" class="tsd-kind-icon">generate<wbr>PayloadID</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_array" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>array</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_boolean" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>boolean</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_enum" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>enum</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_integer" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>integer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_number" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>number</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_object" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_object_allof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_object_anyof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_object_oneof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#processschemafield_string" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>string</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
+								<a href="countfieldprocessor.html#rawvaluestopossiblepayloads" class="tsd-kind-icon">raw<wbr>Values<wbr>ToPossible<wbr>Payloads</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="customfieldprocessor.html" class="tsd-kind-icon">Custom<wbr>Field<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="schemapayloadgenerator.html" class="tsd-kind-icon">Schema<wbr>Payload<wbr>Generator</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="typefieldprocessor.html" class="tsd-kind-icon">Type<wbr>Field<wbr>Processor</a>
-						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
-								<a href="typefieldprocessor.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#generator" class="tsd-kind-icon">generator</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#executecustomtypeprocessor" class="tsd-kind-icon">execute<wbr>Custom<wbr>Type<wbr>Processor</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#flattenobjectpropertiestopayloads" class="tsd-kind-icon">flatten<wbr>Object<wbr>Properties<wbr>ToPayloads</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
-								<a href="typefieldprocessor.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#generatepayloadid" class="tsd-kind-icon">generate<wbr>PayloadID</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_array" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>array</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_boolean" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>boolean</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_enum" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>enum</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_integer" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>integer</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_number" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>number</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_object" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_object_allof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>all<wbr>Of</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_object_anyof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>any<wbr>Of</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_object_oneof" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>object_<wbr>one<wbr>Of</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#processschemafield_string" class="tsd-kind-icon">process<wbr>Schema<wbr>Field_<wbr>string</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
-								<a href="typefieldprocessor.html#rawvaluestopossiblepayloads" class="tsd-kind-icon">raw<wbr>Values<wbr>ToPossible<wbr>Payloads</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="../interfaces/ifieldpossiblepayload.html" class="tsd-kind-icon">IField<wbr>Possible<wbr>Payload</a>
 					</li>

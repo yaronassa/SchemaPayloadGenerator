@@ -102,7 +102,10 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported"><a href="schemapayloadgenerator.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="schemapayloadgenerator.html#calculatefieldpayloadcount" class="tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="schemapayloadgenerator.html#calculatepayloadcount" class="tsd-kind-icon">calculate<wbr>Payload<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="schemapayloadgenerator.html#extractmasterfield" class="tsd-kind-icon">extract<wbr>Master<wbr>Field</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="schemapayloadgenerator.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="schemapayloadgenerator.html#generatepayloads" class="tsd-kind-icon">generate<wbr>Payloads</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="schemapayloadgenerator.html#initfieldprocessors" class="tsd-kind-icon">init<wbr>Field<wbr>Processors</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="schemapayloadgenerator.html#loadschema" class="tsd-kind-icon">load<wbr>Schema</a></li>
@@ -126,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L80">schemaPayloadGenerator.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L81">schemaPayloadGenerator.ts:81</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -145,16 +148,30 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
 					<a name="fieldprocessors" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> field<wbr>Processors</h3>
-					<div class="tsd-signature tsd-kind-icon">field<wbr>Processors<span class="tsd-signature-symbol">:</span> <a href="basefieldprocessor.html" class="tsd-signature-type">BaseFieldProcessor</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">field<wbr>Processors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L80">schemaPayloadGenerator.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L81">schemaPayloadGenerator.ts:81</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Processing classes for the schema fields</p>
 						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>count<wbr>Field<wbr>Processor<span class="tsd-signature-symbol">: </span><a href="countfieldprocessor.html" class="tsd-signature-type">CountFieldProcessor</a></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>custom<wbr>Field<wbr>Processor<span class="tsd-signature-symbol">: </span><a href="customfieldprocessor.html" class="tsd-signature-type">CustomFieldProcessor</a></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>type<wbr>Field<wbr>Processor<span class="tsd-signature-symbol">: </span><a href="typefieldprocessor.html" class="tsd-signature-type">TypeFieldProcessor</a></h5>
+							</li>
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
@@ -163,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ischemapayloadgeneratoroptions.html" class="tsd-signature-type">ISchemaPayloadGeneratorOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L76">schemaPayloadGenerator.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L77">schemaPayloadGenerator.ts:77</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +190,7 @@
 					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">JSONSchema6</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L78">schemaPayloadGenerator.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L79">schemaPayloadGenerator.ts:79</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,17 +202,117 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<a name="calculatefieldpayloadcount" class="tsd-anchor"></a>
+					<h3>calculate<wbr>Field<wbr>Payload<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L181">schemaPayloadGenerator.ts:181</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generate the payload count for a single field without actually generating its values (if possible)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>field: <a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<a name="calculatepayloadcount" class="tsd-anchor"></a>
+					<h3>calculate<wbr>Payload<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">calculate<wbr>Payload<wbr>Count<span class="tsd-signature-symbol">(</span>definitionKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L137">schemaPayloadGenerator.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Generates the payload count without actually generating them (if possible)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> definitionKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>In case the schema contains several definitions, which on to generate values for</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+					<a name="extractmasterfield" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> extract<wbr>Master<wbr>Field</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">extract<wbr>Master<wbr>Field<span class="tsd-signature-symbol">(</span>definitionKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L211">schemaPayloadGenerator.ts:211</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Extracts the master schema field to process</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> definitionKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>In case the schema contains several definitions, which on to generate values for</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>key<wbr>Report<wbr>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>master<wbr>Field<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JSONSchema6</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 					<a name="generatefieldpayloads" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> generate<wbr>Field<wbr>Payloads</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+					<h3>generate<wbr>Field<wbr>Payloads</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 						<li class="tsd-signature tsd-kind-icon">generate<wbr>Field<wbr>Payloads<span class="tsd-signature-symbol">(</span>field<span class="tsd-signature-symbol">: </span><a href="../interfaces/ifieldprocessingdata.html" class="tsd-signature-type">IFieldProcessingData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ifieldpossiblepayload.html" class="tsd-signature-type">IFieldPossiblePayload</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L171">schemaPayloadGenerator.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L199">schemaPayloadGenerator.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -225,7 +342,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L136">schemaPayloadGenerator.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L158">schemaPayloadGenerator.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -256,7 +373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L182">schemaPayloadGenerator.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L231">schemaPayloadGenerator.ts:231</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -273,7 +390,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L108">schemaPayloadGenerator.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L109">schemaPayloadGenerator.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +428,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L192">schemaPayloadGenerator.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L242">schemaPayloadGenerator.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L92">schemaPayloadGenerator.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L93">schemaPayloadGenerator.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -378,7 +495,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L219">schemaPayloadGenerator.ts:219</a></li>
+									<li>Defined in <a href="https://github.com/yaronassa/SchemaPayloadGenerator/blob/master/src/schemaPayloadGenerator.ts#L269">schemaPayloadGenerator.ts:269</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,6 +531,9 @@
 						<a href="basefieldprocessor.html" class="tsd-kind-icon">Base<wbr>Field<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="countfieldprocessor.html" class="tsd-kind-icon">Count<wbr>Field<wbr>Processor</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
 						<a href="customfieldprocessor.html" class="tsd-kind-icon">Custom<wbr>Field<wbr>Processor</a>
 					</li>
 				</ul>
@@ -433,7 +553,16 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 								<a href="schemapayloadgenerator.html#schema" class="tsd-kind-icon">schema</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-not-exported">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+								<a href="schemapayloadgenerator.html#calculatefieldpayloadcount" class="tsd-kind-icon">calculate<wbr>Field<wbr>Payload<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+								<a href="schemapayloadgenerator.html#calculatepayloadcount" class="tsd-kind-icon">calculate<wbr>Payload<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+								<a href="schemapayloadgenerator.html#extractmasterfield" class="tsd-kind-icon">extract<wbr>Master<wbr>Field</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 								<a href="schemapayloadgenerator.html#generatefieldpayloads" class="tsd-kind-icon">generate<wbr>Field<wbr>Payloads</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
@@ -469,6 +598,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="../interfaces/ischemapayloadgeneratoroptions.html" class="tsd-kind-icon">ISchema<wbr>Payload<wbr>Generator<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="../globals.html#counthandler" class="tsd-kind-icon">Count<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-is-not-exported">
 						<a href="../globals.html#customprocessorfunction" class="tsd-kind-icon">Custom<wbr>Processor<wbr>Function</a>
