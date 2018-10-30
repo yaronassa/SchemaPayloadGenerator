@@ -44,6 +44,8 @@ Project code documentation is available at the [github page](https://yaronassa.g
 
 The feature roadmap is available in the [roadmap github board](https://github.com/yaronassa/SchemaPayloadGenerator/projects/1).
 
+The changelog is available [here](./CHANGELOG.md).
+
 ## Out-Of-The-Box usage
 
 ### Loading a schema

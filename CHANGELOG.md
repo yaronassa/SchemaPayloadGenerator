@@ -1,3 +1,9 @@
+### 0.4 (31/10/2018)
+
+#### New features
+
+- Ability to "dry run" and only get the payload variation count [#5](https://github.com/yaronassa/SchemaPayloadGenerator/issues/5)
+
 ### 0.3 (21/10/2018)
 
 #### Bug fixes
